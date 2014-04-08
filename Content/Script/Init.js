@@ -31,7 +31,7 @@ function Init() {
         monsterReady = true;
     };
     monsterImage.src = "Content/Image/3.png";
-
+   
    
     //var bgImage = new Image();
     //bgImage.src = "Content/Image/background.png";
