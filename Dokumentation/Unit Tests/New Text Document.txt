@@ -1,1 +1,0 @@
-http://www.philliphaydon.com/2013/10/running-javascript-unit-tests-in-visual-studio-with-jasmine-and-resharper/
