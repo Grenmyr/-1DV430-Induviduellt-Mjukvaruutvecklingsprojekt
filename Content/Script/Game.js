@@ -1,27 +1,29 @@
 ﻿var Init = function () {
     var width = 800;
     var height = 450;
-
-
     var textureConstructor = Texture;
-    Texture = new textureConstructor();
+    Texture = new textureConstructor(800, 450);
+
+   
+
     var player = {
         speed: 10, // movement in pixels per second
         jumping: false,
         x: 0,
         y: 0,
-        sizey : 20,
-        sizex : 20,
+        sizey: 20,
+        sizex: 20,
         gravity: 1
-        
     }
 
-    var keyPressed = {
-        
-    };
+   
+    var bullets = [];
+   
+   
+    var keyPressed = {};
 
     addEventListener("keydown", function (e) {
-        
+
         keyPressed[e.keyCode] = true;
     }, false);
 
@@ -30,7 +32,15 @@
     }, false);
 
     var position = function (modifier) {
-       
+        if (32 in keyPressed) {
+            delete keyPressed[32];
+            bullet.push({
+                x: player.x,
+                y: player.y,
+                vy: 10,
+            })
+            
+        }
         if (38 in keyPressed) { // Player holding up
             if (!player.jumping) {
                 player.jumping = true;
@@ -39,32 +49,31 @@
         }
         if (37 in keyPressed) { // Player holding left
             player.x -= player.speed * modifier;
+            
         }
         if (39 in keyPressed) { // Player holding right
-            
+
             player.x += player.speed * modifier;
-            console.log(player.x);
         }
         if (40 in keyPressed) { // Player holding down
             player.y += player.speed * modifier;
         }
-        
-       
+
         player.y += player.gravity;
-        
-        if (player.y >= 450 - player.sizey)
-        {
+
+        if (player.y >= 450 - player.sizey) {
             player.y = 450 - player.sizey;
-            player.jumping = false;   
+            player.jumping = false;
         }
-        if (player.x >= 800 - player.sizex ) {
+        if (player.x >= 800 - player.sizex) {
             player.x = 800 - player.sizex;
         }
         else if (player.x <= 0) {
             player.x = 0;
         }
+
     }
-    
+
     // This is used to adjust gamespeed if slow computor it get high modifier value in Position function.
     var PrevTime = Date.now();
     var main = function () {
@@ -75,16 +84,18 @@
         renderTexture();
         PrevTime = NewDate;
     };
-    
+
     // Game loop, calling main function as fast as possible.
     setInterval(main, 1);
 
     // Function to reder units and texture.
     var renderTexture = function () {
- 
+    
+        console.log(bullet[0],bullet[1])
         var backgroundTexture = Texture.Background();
         var playerTexture = Texture.Player(player.x, player.y);
         var enemyTexture = Texture.Enemy();
+        //var bullet = Texture.bullet(bul);
     }
 
 }

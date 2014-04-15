@@ -1,10 +1,15 @@
-﻿Texture = function () {
+﻿Texture = function (width, height) {
         var canvas = document.createElement("canvas")
         var ctx = canvas.getContext("2d");
-        canvas.width = 800;
-        canvas.height = 450;
+        canvas.width = width;
+        canvas.height = height;
         canvas.setAttribute("id", "canvas")
         document.body.appendChild(canvas);
+       
+        this.bullet = function (xPos, yPos) {
+            ctx.rect(xPos, yPos, 20, 20);
+            ctx.stroke();
+        }
 
     this.Background = function () {
         var backgroundImage = new Image();
