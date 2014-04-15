@@ -7,7 +7,7 @@
    
 
     var player = {
-        speed: 10, // movement in pixels per second
+        speed: 30, // movement in pixels per second
         jumping: false,
         x: 0,
         y: 0,
@@ -16,9 +16,7 @@
         gravity: 1
     }
 
-   
     var bullets = [];
-   
    
     var keyPressed = {};
 
@@ -32,13 +30,16 @@
     }, false);
 
     var position = function (modifier) {
+
+
         if (32 in keyPressed) {
             delete keyPressed[32];
-            bullet.push({
+            bullets.push({
                 x: player.x,
                 y: player.y,
-                vy: 10,
-            })
+                vy: 5
+            });
+           
             
         }
         if (38 in keyPressed) { // Player holding up
@@ -91,11 +92,14 @@
     // Function to reder units and texture.
     var renderTexture = function () {
     
-        console.log(bullet[0],bullet[1])
-        var backgroundTexture = Texture.Background();
+       
+        //var backgroundTexture = Texture.Background();
         var playerTexture = Texture.Player(player.x, player.y);
         var enemyTexture = Texture.Enemy();
-        //var bullet = Texture.bullet(bul);
+        var texture = Texture.bullet(bullets);
+      
+        
+        
     }
 
 }

@@ -5,10 +5,16 @@
         canvas.height = height;
         canvas.setAttribute("id", "canvas")
         document.body.appendChild(canvas);
-       
-        this.bullet = function (xPos, yPos) {
-            ctx.rect(xPos, yPos, 20, 20);
-            ctx.stroke();
+        var playerImage = new Image(); 
+        playerImage.src = "Content/Image/unit.png";
+        var enemyImage = new Image();
+        enemyImage.src = "Content/Image/3.png";
+
+        this.bullet = function (bullets) {
+            for (var i = 0; i < bullets.length; i++) {
+                ctx.fillRect(bullets[i].x, bullets[i].y -= bullets[i].vy, 20, 20);
+                ctx.stroke();
+            }
         }
 
     this.Background = function () {
@@ -19,17 +25,17 @@
         backgroundImage.src = "Content/Image/background.png";   
     }
     this.Player = function (xPos, yPos) {
-        var playerImage = new Image();
-        playerImage.onload = function () {
+        ctx.clearRect(0,0,width,height)
+        
+        
             ctx.drawImage(playerImage, xPos, yPos);
-        }
-        playerImage.src = "Content/Image/unit.png";
+        
     }
     this.Enemy = function () {
-        var enemyImage = new Image();
-        enemyImage.onload = function () {
+       
+    
             ctx.drawImage(enemyImage, 100, 100);
-        }
-        enemyImage.src = "Content/Image/3.png";
+    
+        
     }
 }
