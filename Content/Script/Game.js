@@ -4,6 +4,11 @@
     var textureConstructor = Texture;
     Texture = new textureConstructor(800, 450);
 
+    var staticTextureConstructor = StaticTexture;
+    StaticTexture = new staticTextureConstructor(800,450)
+
+    var staticTexture = StaticTexture.Background();
+
    
 
     var player = {
@@ -34,6 +39,7 @@
 
         if (32 in keyPressed) {
             delete keyPressed[32];
+     
             bullets.push({
                 x: player.x,
                 y: player.y,
@@ -91,15 +97,10 @@
 
     // Function to reder units and texture.
     var renderTexture = function () {
-    
-       
-        //var backgroundTexture = Texture.Background();
+
         var playerTexture = Texture.Player(player.x, player.y);
         var enemyTexture = Texture.Enemy();
         var texture = Texture.bullet(bullets);
-      
-        
-        
     }
 
 }

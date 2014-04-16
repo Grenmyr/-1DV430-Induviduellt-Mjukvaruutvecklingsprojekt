@@ -1,8 +1,12 @@
 ﻿body {
 
 }
-/*#canvas {
-background:#ABABAB;
-margin:0;padding:0;
-}*/
-
+canvas {
+    position:absolute;
+}
+#canvas {  
+    z-index:1;
+}
+#staticCanvas {
+    z-index:0;
+}
