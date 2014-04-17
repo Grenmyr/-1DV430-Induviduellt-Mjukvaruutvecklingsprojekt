@@ -7,7 +7,8 @@
     var staticTextureConstructor = StaticTexture;
     StaticTexture = new staticTextureConstructor(800,450)
 
-    var staticTexture = StaticTexture.Background();
+    var backgroundTexture = StaticTexture.background();
+    var  terrain = StaticTexture.terrain();
 
    
 
