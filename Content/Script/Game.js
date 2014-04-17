@@ -56,6 +56,7 @@
                 player.jumping = true;
                 player.y += -100;
             }
+           
         }
         if (37 in keyPressed) { // Player holding left
             player.x -= player.speed * modifier;
@@ -69,11 +70,15 @@
             player.y += player.speed * modifier;
         }
 
+
         player.y += player.gravity;
+       
 
         if (player.y >= 450 - player.sizey) {
             player.y = 450 - player.sizey;
             player.jumping = false;
+
+         
         }
         if (player.x >= 800 - player.sizex) {
             player.x = 800 - player.sizex;
