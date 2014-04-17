@@ -5,14 +5,21 @@
     Texture = new textureConstructor(800, 450);
 
     var staticTextureConstructor = StaticTexture;
-    StaticTexture = new staticTextureConstructor(800,450)
-    var map = [{ SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 300, Ypos: 400, xSize: 20, ySize: 20 }, { SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 400, xSize: 20, ySize: 20 }
-    ,{ SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 360, xSize: 20, ySize: 20 }];
-   
+    StaticTexture = new staticTextureConstructor(800, 450)
+    var map = [
+        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 300, Ypos: 400, xSize: 20, ySize: 20 },
+        { SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 400, xSize: 20, ySize: 20 },
+        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 360, xSize: 20, ySize: 20 },
+        { SpriteposX: 58, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 320, Ypos: 400, xSize: 20, ySize: 20 },
+        { SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 340, Ypos: 400, xSize: 20, ySize: 20 },
+        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 380, Ypos: 400, xSize: 20, ySize: 20 },
+        { SpriteposX: 58, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 380, xSize: 20, ySize: 20 },
+    ];
+
     var backgroundTexture = StaticTexture.background();
     var terrain = StaticTexture.terrain(map);
 
-   
+
 
     var player = {
         speed: 30, // movement in pixels per second
@@ -25,7 +32,7 @@
     }
 
     var bullets = [];
-   
+
     var keyPressed = {};
 
     addEventListener("keydown", function (e) {
@@ -42,25 +49,25 @@
 
         if (32 in keyPressed) {
             delete keyPressed[32];
-     
+
             bullets.push({
                 x: player.x,
                 y: player.y,
                 vy: 5
             });
-           
-            
+
+
         }
         if (38 in keyPressed) { // Player holding up
             if (!player.jumping) {
                 player.jumping = true;
                 player.y += -100;
             }
-           
+
         }
         if (37 in keyPressed) { // Player holding left
             player.x -= player.speed * modifier;
-            
+
         }
         if (39 in keyPressed) { // Player holding right
 
@@ -72,13 +79,13 @@
 
 
         player.y += player.gravity;
-       
+
 
         if (player.y >= 450 - player.sizey) {
             player.y = 450 - player.sizey;
             player.jumping = false;
 
-         
+
         }
         if (player.x >= 800 - player.sizex) {
             player.x = 800 - player.sizex;
@@ -94,7 +101,7 @@
     var main = function () {
         var NewDate = Date.now();
         var timeDiff = NewDate - PrevTime;
-          
+
         position(timeDiff / 100);
         renderTexture();
         PrevTime = NewDate;
