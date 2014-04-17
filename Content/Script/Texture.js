@@ -18,6 +18,9 @@
         width: 20,
         height:20
     }
+    var terrain = {
+
+    }
 
     this.bullet = function (bullets) {
       

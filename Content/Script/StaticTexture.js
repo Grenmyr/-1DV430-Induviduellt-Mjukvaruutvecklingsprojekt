@@ -13,18 +13,24 @@
     backgroundCanvas.setAttribute("id", "backgroundCanvas")
     document.body.appendChild(backgroundCanvas);
 
+ 
 
-    this.background = function () {
+    this.background = function () {  
         var backgroundImage = new Image();
         backgroundImage.src = "Content/Image/background.png";
         ctxbackground.drawImage(backgroundImage, 0, 0);
     }
 
-    this.terrain = function () {
+    this.terrain = function (array) {
         var terrain = new Image();
         terrain.src = "Content/Image/spriteMap.png";
-        ctxTerrain.drawImage(terrain, 0, 0, 116, 58, 300, 300, 40, 20);
-        ctxTerrain.drawImage(terrain, 116, 0, 58, 58, 360, 300, 20, 20);
+        console.log(array[0].SpriteposX)
+        for (var i = 0; i < array.length; i++) {
+            console.log(terrain, array[i].SpriteposX, array[i].SpritePosy, array[i].xLength, array[i].Yheight, array[i].xPos, array[i].Ypos, 20, 20)
+            ctxTerrain.drawImage(terrain, array[i].SpriteposX, array[i].SpritePosy, array[i].xLength, array[i].Yheight, array[i].xPos, array[i].Ypos, 20, 20);
+        }
+        //ctxTerrain.drawImage(terrain, 0, 0, 116, 58, 300, 400, 20, 20);
+        //ctxTerrain.drawImage(terrain, 116, 0, 58, 58, 380, 400, 20, 20);
     }
 
 

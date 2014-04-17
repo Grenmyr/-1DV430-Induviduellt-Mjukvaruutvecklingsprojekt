@@ -6,9 +6,11 @@
 
     var staticTextureConstructor = StaticTexture;
     StaticTexture = new staticTextureConstructor(800,450)
-
+    var map = [{ SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 300, Ypos: 400, xSize: 20, ySize: 20 }, { SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 400, xSize: 20, ySize: 20 }
+    ,{ SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 360, xSize: 20, ySize: 20 }];
+   
     var backgroundTexture = StaticTexture.background();
-    var  terrain = StaticTexture.terrain();
+    var terrain = StaticTexture.terrain(map);
 
    
 
@@ -87,7 +89,7 @@
     var main = function () {
         var NewDate = Date.now();
         var timeDiff = NewDate - PrevTime;
-
+          
         position(timeDiff / 100);
         renderTexture();
         PrevTime = NewDate;
@@ -105,7 +107,7 @@
     }
 
 }
-
+//var animationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mossRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || null;
 
 window.onload = function () {
 
