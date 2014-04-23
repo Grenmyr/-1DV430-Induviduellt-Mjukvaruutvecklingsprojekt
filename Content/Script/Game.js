@@ -30,7 +30,8 @@
         sizey: 20,
         sizex: 20,
         gravity: 1.5,
-        faceRight: true
+        faceRight: true,
+        move: true
     }
     var aim = {
         angle: 0,
@@ -51,7 +52,9 @@
     }, false);
 
     var position = function (modifier) {
+        player.move = true;
         player.gravity = 1.5;
+       
         if (87 in keyPressed) { // Player aiming up
             if (aim.angle < 180) {
                 aim.angle += aim.speed;
@@ -84,25 +87,36 @@
 
         }
         if (37 in keyPressed) { // Player holding left
-            player.x -= player.speed * modifier;
-            player.faceRight = false;
-
+            if (player.move) {
+                player.x -= player.speed * modifier;
+                player.faceRight = false;
+            }
         }
         if (39 in keyPressed) { // Player holding right
-
-            player.x += player.speed * modifier;
-            player.faceRight = true;
+           
+            //if (checkCol()) {
+                player.x += player.speed * modifier;
+                player.faceRight = true;
+            //}
+            
         }
-        if (40 in keyPressed) { // Player holding down
-            player.y += player.speed * modifier;
+        function checkCol() {
+            var move = true;
+            for (var i = 0; i < map.length; i++) {
+                if ((player.x < map[i].xPos + map[i].width && player.x > map[i].xPos - map[i].width) && (player.y < map[i].Ypos + map[i].height && player.y > map[i].Ypos - map[i].height)) {
+                move=false}
+            }
+            return move;
         }
-
         for (var i = 0; i < map.length; i++) {
             if ((player.x < map[i].xPos + map[i].width && player.x > map[i].xPos - map[i].width) && (player.y < map[i].Ypos + map[i].height && player.y > map[i].Ypos - map[i].height)) {
                 player.gravity = 0;
                 player.jumping = false;
+                player.move = false;
             }
         }
+
+        
 
         player.y += player.gravity;
 
@@ -117,6 +131,7 @@
         else if (player.x <= 0) {
             player.x = 0;
         }
+   
 
     }
 
