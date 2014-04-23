@@ -34,7 +34,7 @@
 
     var aim = {
         angle: 0,
-        speed: 0.01
+        speed: 0.005
     }
 
     var bullets = [];
@@ -70,8 +70,8 @@
             delete keyPressed[32];
 
             bullets.push({
-                x: player.x,
-                y: player.y,
+                x: player.x+player.sizex/2,
+                y: player.y+player.sizey/2,
                 vy: Math.sin(aim.angle) * 5,
                 vx : Math.cos(aim.angle)*5
             });

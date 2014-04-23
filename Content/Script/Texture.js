@@ -16,8 +16,8 @@
     var enemyImage = new Image();
     enemyImage.src = "Content/Image/3.png";
     var enemyPos = {
-        xpos: 100,
-        ypos: 100,
+        xpos: Math.floor((Math.random()*600)+1),
+        ypos: Math.floor((Math.random() * 450) + 1),
         width: 20,
         height:20
     }
@@ -45,20 +45,20 @@
 
     }
     this.aim = function (xPos, yPos,angle) {
-        //console.log(xPos + aimX, yPos + aimY)
+        console.log(yPos)
         ctx.drawImage(aimImage, xPos -50* Math.cos(angle), yPos- 50* Math.sin(angle), 20, 20);
-
+      
        
     }
     this.Enemy = function () {
-        ctx.drawImage(enemyImage, 100, 100);
+        ctx.drawImage(enemyImage, enemyPos.xpos, enemyPos.ypos);
     }
     function checkCol(bulletX,bulletY) {
   
-        //console.log(enemyPos.xpos + enemyPos.width)
-        //console.log(enemyPos.xpos - enemyPos.width)
+        
         if ((bulletX < enemyPos.xpos + enemyPos.width && bulletX > enemyPos.xpos - enemyPos.width) && (bulletY < enemyPos.ypos + enemyPos.height && bulletY > enemyPos.ypos - enemyPos.height)) {
-           alert("BOOM")
+            enemyPos.xpos = Math.floor((Math.random() * 600) + 1);
+            enemyPos.ypos = Math.floor((Math.random() * 450) + 1);
         }
     }
 }
