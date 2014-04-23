@@ -7,13 +7,13 @@
     var staticTextureConstructor = StaticTexture;
     StaticTexture = new staticTextureConstructor(800, 450)
     var map = [
-        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 300, Ypos: 400, xSize: 20, ySize: 20 },
-        { SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 400, xSize: 20, ySize: 20 },
-        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 360, xSize: 20, ySize: 20 },
-        { SpriteposX: 58, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 320, Ypos: 400, xSize: 20, ySize: 20 },
-        { SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 340, Ypos: 400, xSize: 20, ySize: 20 },
-        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 380, Ypos: 400, xSize: 20, ySize: 20 },
-        { SpriteposX: 58, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 380, xSize: 20, ySize: 20 },
+        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 300, Ypos: 400 },
+        { SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 400 },
+        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 360 },
+        { SpriteposX: 58, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 320, Ypos: 400 },
+        { SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 340, Ypos: 400 },
+        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 380, Ypos: 400 },
+        { SpriteposX: 58, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 380 },
     ];
 
     var backgroundTexture = StaticTexture.background();
@@ -28,7 +28,13 @@
         y: 0,
         sizey: 20,
         sizex: 20,
-        gravity: 1
+        gravity: 1.5,
+        Aimrotate: 5
+    }
+
+    var aim = {
+        X: 50,
+        Y: 0
     }
 
     var bullets = [];
@@ -55,13 +61,11 @@
                 y: player.y,
                 vy: 5
             });
-
-
         }
         if (38 in keyPressed) { // Player holding up
             if (!player.jumping) {
                 player.jumping = true;
-                player.y += -100;
+                player.y += -150;
             }
 
         }
@@ -84,8 +88,6 @@
         if (player.y >= 450 - player.sizey) {
             player.y = 450 - player.sizey;
             player.jumping = false;
-
-
         }
         if (player.x >= 800 - player.sizex) {
             player.x = 800 - player.sizex;
@@ -113,9 +115,10 @@
     // Function to reder units and texture.
     var renderTexture = function () {
 
-        var playerTexture = Texture.Player(player.x, player.y);
-        var enemyTexture = Texture.Enemy();
-        var texture = Texture.bullet(bullets);
+        Texture.Player(player.x, player.y);
+        Texture.aim(player.x, player.y, aim.X, aim.Y);
+        Texture.Enemy();
+        Texture.bullet(bullets);
     }
 
 }
