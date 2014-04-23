@@ -28,12 +28,13 @@
     this.bullet = function (bullets) {
       
         for (var i = 0; i < bullets.length; i++) {
-            //console.log(bullets[i].x)
+            console.log(bullets[i].x)
             ctx.fillRect(bullets[i].x -= bullets[i].vx, bullets[i].y -= bullets[i].vy, 5, 5);
             ctx.stroke();
             checkCol(bullets[i].x, bullets[i].y);
-            if (bullets[i].y < 0 || bullets[i].y > height ) {
+            if (bullets[i].y < 0 || bullets[i].y > height ||bullets[i].x > width || bullets[i].x < 0 ) {
                 bullets.splice(i, 1)
+          
             }
         }
     }
@@ -45,7 +46,7 @@
 
     }
     this.aim = function (xPos, yPos,angle) {
-        console.log(yPos)
+     
         ctx.drawImage(aimImage, xPos -50* Math.cos(angle), yPos- 50* Math.sin(angle), 20, 20);
       
        

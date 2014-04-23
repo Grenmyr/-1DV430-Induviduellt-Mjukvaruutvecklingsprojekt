@@ -6,14 +6,15 @@
 
     var staticTextureConstructor = StaticTexture;
     StaticTexture = new staticTextureConstructor(800, 450)
+
     var map = [
-        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 300, Ypos: 400 },
-        { SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 400 },
-        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 360 },
-        { SpriteposX: 58, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 320, Ypos: 400 },
-        { SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 340, Ypos: 400 },
-        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 380, Ypos: 400 },
-        { SpriteposX: 58, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 380 },
+        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 300, Ypos: 400, width: 20, height: 20 },
+        { SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 400, width: 20, height: 20 },
+        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 360, width: 20, height: 20 },
+        { SpriteposX: 58, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 320, Ypos: 400, width: 20, height: 20 },
+        { SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 340, Ypos: 400, width: 20, height: 20 },
+        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 380, Ypos: 400, width: 20, height: 20 },
+        { SpriteposX: 58, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 380, width: 20, height: 20 },
     ];
 
     var backgroundTexture = StaticTexture.background();
@@ -29,9 +30,8 @@
         sizey: 20,
         sizex: 20,
         gravity: 1.5,
-        faceRight : true
+        faceRight: true
     }
-
     var aim = {
         angle: 0,
         speed: 0.005
@@ -51,13 +51,13 @@
     }, false);
 
     var position = function (modifier) {
-        
+        player.gravity = 1.5;
         if (87 in keyPressed) { // Player aiming up
-            if (aim.angle < 180 ) {
+            if (aim.angle < 180) {
                 aim.angle += aim.speed;
                 console.log(aim.angle)
             }
-            
+
         }
         if (83 in keyPressed) { // Player aiming down
             if (aim.angle > 0) {
@@ -70,10 +70,10 @@
             delete keyPressed[32];
 
             bullets.push({
-                x: player.x+player.sizex/2,
-                y: player.y+player.sizey/2,
+                x: player.x + player.sizex / 2,
+                y: player.y + player.sizey / 2,
                 vy: Math.sin(aim.angle) * 5,
-                vx : Math.cos(aim.angle)*5
+                vx: Math.cos(aim.angle) * 5
             });
         }
         if (38 in keyPressed) { // Player holding up
@@ -97,6 +97,12 @@
             player.y += player.speed * modifier;
         }
 
+        for (var i = 0; i < map.length; i++) {
+            if ((player.x < map[i].xPos + map[i].width && player.x > map[i].xPos - map[i].width) && (player.y < map[i].Ypos + map[i].height && player.y > map[i].Ypos - map[i].height)) {
+                player.gravity = 0;
+                player.jumping = false;
+            }
+        }
 
         player.y += player.gravity;
 
