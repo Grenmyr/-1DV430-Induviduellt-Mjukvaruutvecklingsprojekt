@@ -29,12 +29,12 @@
         sizey: 20,
         sizex: 20,
         gravity: 1.5,
-        Aimrotate: 5
+        faceRight : true
     }
 
     var aim = {
-        X: 50,
-        Y: 0
+        angle: 0,
+        speed: 0.01
     }
 
     var bullets = [];
@@ -51,7 +51,20 @@
     }, false);
 
     var position = function (modifier) {
-
+        
+        if (87 in keyPressed) { // Player aiming up
+            if (aim.angle < 180 ) {
+                aim.angle += aim.speed;
+                console.log(aim.angle)
+            }
+            
+        }
+        if (83 in keyPressed) { // Player aiming down
+            if (aim.angle > 0) {
+                aim.angle -= aim.speed;
+                console.log(aim.angle)
+            }
+        }
 
         if (32 in keyPressed) {
             delete keyPressed[32];
@@ -59,7 +72,8 @@
             bullets.push({
                 x: player.x,
                 y: player.y,
-                vy: 5
+                vy: Math.sin(aim.angle) * 5,
+                vx : Math.cos(aim.angle)*5
             });
         }
         if (38 in keyPressed) { // Player holding up
@@ -71,11 +85,13 @@
         }
         if (37 in keyPressed) { // Player holding left
             player.x -= player.speed * modifier;
+            player.faceRight = false;
 
         }
         if (39 in keyPressed) { // Player holding right
 
             player.x += player.speed * modifier;
+            player.faceRight = true;
         }
         if (40 in keyPressed) { // Player holding down
             player.y += player.speed * modifier;
@@ -116,7 +132,7 @@
     var renderTexture = function () {
 
         Texture.Player(player.x, player.y);
-        Texture.aim(player.x, player.y, aim.X, aim.Y);
+        Texture.aim(player.x, player.y, aim.angle);
         Texture.Enemy();
         Texture.bullet(bullets);
     }

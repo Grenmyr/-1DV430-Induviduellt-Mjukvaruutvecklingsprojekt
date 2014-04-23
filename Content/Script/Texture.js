@@ -28,8 +28,8 @@
     this.bullet = function (bullets) {
       
         for (var i = 0; i < bullets.length; i++) {
-            console.log(bullets[i].x)
-            ctx.fillRect(bullets[i].x, bullets[i].y -= bullets[i].vy, 5, 5);
+            //console.log(bullets[i].x)
+            ctx.fillRect(bullets[i].x -= bullets[i].vx, bullets[i].y -= bullets[i].vy, 5, 5);
             ctx.stroke();
             checkCol(bullets[i].x, bullets[i].y);
             if (bullets[i].y < 0 || bullets[i].y > height ) {
@@ -44,9 +44,9 @@
        
 
     }
-    this.aim = function (xPos, yPos, aimX, aimY) {
-        console.log(xPos + aimX, yPos + aimY)
-        ctx.drawImage(aimImage, xPos + aimX, yPos + aimY,20,20);
+    this.aim = function (xPos, yPos,angle) {
+        //console.log(xPos + aimX, yPos + aimY)
+        ctx.drawImage(aimImage, xPos -50* Math.cos(angle), yPos- 50* Math.sin(angle), 20, 20);
 
        
     }
@@ -54,9 +54,9 @@
         ctx.drawImage(enemyImage, 100, 100);
     }
     function checkCol(bulletX,bulletY) {
-        console.log(bulletX)
-        console.log(enemyPos.xpos + enemyPos.width)
-        console.log(enemyPos.xpos - enemyPos.width)
+  
+        //console.log(enemyPos.xpos + enemyPos.width)
+        //console.log(enemyPos.xpos - enemyPos.width)
         if ((bulletX < enemyPos.xpos + enemyPos.width && bulletX > enemyPos.xpos - enemyPos.width) && (bulletY < enemyPos.ypos + enemyPos.height && bulletY > enemyPos.ypos - enemyPos.height)) {
            alert("BOOM")
         }
