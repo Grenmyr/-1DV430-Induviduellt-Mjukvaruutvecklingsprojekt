@@ -8,19 +8,19 @@
     StaticTexture = new staticTextureConstructor(800, 450)
 
     var map = [
-        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 300, Ypos: 400, width: 20, height: 20 },
-        { SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 400, width: 20, height: 20 },
-        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 360, width: 20, height: 20 },
-        { SpriteposX: 58, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 320, Ypos: 400, width: 20, height: 20 },
-        { SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 340, Ypos: 400, width: 20, height: 20 },
-        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 380, Ypos: 400, width: 20, height: 20 },
-        { SpriteposX: 58, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 380, width: 20, height: 20 },
+        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 300, Ypos: 430, width: 20, height: 20 },
+        //{ SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 400, width: 20, height: 20 },
+        //{ SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 360, width: 20, height: 20 },
+        //{ SpriteposX: 58, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 320, Ypos: 400, width: 20, height: 20 },
+        //{ SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 340, Ypos: 400, width: 20, height: 20 },
+        //{ SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 380, Ypos: 400, width: 20, height: 20 },
+        //{ SpriteposX: 58, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 380, width: 20, height: 20 },
     ];
 
     var backgroundTexture = StaticTexture.background();
     var terrain = StaticTexture.terrain(map);
 
-
+     var bool = true;
 
     var player = {
         speed: 30, // movement in pixels per second
@@ -35,7 +35,7 @@
     }
     var aim = {
         angle: 0,
-        speed: 0.005
+        speed: 0.01
     }
 
     var bullets = [];
@@ -51,9 +51,12 @@
         delete keyPressed[e.keyCode];
     }, false);
 
+    var bool = true;
+
     var position = function (modifier) {
-        player.move = true;
+     
         player.gravity = 1.5;
+       
        
         if (87 in keyPressed) { // Player aiming up
             if (aim.angle < 180) {
@@ -87,38 +90,48 @@
 
         }
         if (37 in keyPressed) { // Player holding left
-            if (player.move) {
+            var tempX = player.x - player.speed * modifier;
+            var tempY = player.y;
+            if (checkCol(tempX,tempY)) {
                 player.x -= player.speed * modifier;
                 player.faceRight = false;
             }
+         
         }
         if (39 in keyPressed) { // Player holding right
-           
-            //if (checkCol()) {
+            var tempX = player.x + player.speed * modifier;
+            var tempY = player.y;
+            if (checkCol(tempX, tempY)) {
                 player.x += player.speed * modifier;
                 player.faceRight = true;
-            //}
-            
-        }
-        function checkCol() {
-            var move = true;
-            for (var i = 0; i < map.length; i++) {
-                if ((player.x < map[i].xPos + map[i].width && player.x > map[i].xPos - map[i].width) && (player.y < map[i].Ypos + map[i].height && player.y > map[i].Ypos - map[i].height)) {
-                move=false}
             }
-            return move;
+       
+
+        }
+        function checkCol(tempX,tempY) {
+           
+           
+            for (var i = 0; i < map.length; i++) {
+                if ((tempX < map[i].xPos + map[i].width && tempX > map[i].xPos - map[i].width) && (tempY < map[i].Ypos + map[i].height && tempY > map[i].Ypos - map[i].height)) {
+                    bool = false;
+                }
+                return bool;
+            }
         }
         for (var i = 0; i < map.length; i++) {
             if ((player.x < map[i].xPos + map[i].width && player.x > map[i].xPos - map[i].width) && (player.y < map[i].Ypos + map[i].height && player.y > map[i].Ypos - map[i].height)) {
                 player.gravity = 0;
                 player.jumping = false;
-                player.move = false;
+                console.log(player.y)
             }
         }
-
         
 
-        player.y += player.gravity;
+        
+  
+            player.y += player.gravity;
+
+       
 
 
         if (player.y >= 450 - player.sizey) {
@@ -132,7 +145,7 @@
             player.x = 0;
         }
    
-
+        bool = true;
     }
 
     // This is used to adjust gamespeed if slow computor it get high modifier value in Position function.
