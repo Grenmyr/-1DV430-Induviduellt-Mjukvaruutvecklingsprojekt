@@ -34,7 +34,6 @@
             checkCol(bullets[i].x, bullets[i].y);
             if (bullets[i].y < 0 || bullets[i].y > height ||bullets[i].x > width || bullets[i].x < 0 ) {
                 bullets.splice(i, 1)
-          
             }
         }
     }
