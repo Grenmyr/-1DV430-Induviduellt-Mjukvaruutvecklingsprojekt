@@ -1,4 +1,5 @@
 ﻿var Init = function () {
+    // Static texture and classes being initialised first.
     var width = 800;
     var height = 450;
     var textureConstructor = Texture;
@@ -7,6 +8,7 @@
     var staticTextureConstructor = StaticTexture;
     StaticTexture = new staticTextureConstructor(800, 450)
 
+    // Testmap, will be refactored to another class later..
     var map = [
         { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 300, Ypos: 430, width: 20, height: 20 },
         { SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, xPos: 360, Ypos: 400, width: 20, height: 20 },
@@ -20,11 +22,11 @@
     var backgroundTexture = StaticTexture.background();
     var terrain = StaticTexture.terrain(map);
 
-    var bool = true;
 
+    // My player object.
     var player = {
-        speed: 30, // movement in pixels per second
-        jumping: false,
+        speed: 30, // Variable to set speed.
+        jumping: false, 
         x: 0,
         y: 0,
         sizey: 20,
@@ -33,15 +35,18 @@
         faceRight: true,
         move: true
     }
+
+    // My aim to player, perhaps integrate with player objekt in sp5?.
     var aim = {
         angle: 0,
         speed: 0.01
     }
 
+
     var bullets = [];
 
+    // Two evenlistner to check keypresses and to delete keypress event. and also declare object.
     var keyPressed = {};
-
     addEventListener("keydown", function (e) {
 
         keyPressed[e.keyCode] = true;
@@ -68,6 +73,7 @@
         if (38 in keyPressed) { // Player jumping on Up key
             if (!player.jumping) {
                 player.jumping = true;
+
                 player.y += -150;
             }
         }
