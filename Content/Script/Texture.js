@@ -59,7 +59,7 @@
             enemyPos.ypos = Math.floor((Math.random() * 450) + 1);
             return true;
         }
-        for (var i = 0; i < map.length; i++) {
+        for (var i = 0; i < map.length; i++) {// maste anpassa for bullet width också.
             if ((bulletX < map[i].xPos + map[i].width && bulletX > map[i].xPos - map[i].width) &&
                    (bulletY >= map[i].Ypos  && bulletY <= map[i].Ypos + map[i].height)) {
                 return true;
