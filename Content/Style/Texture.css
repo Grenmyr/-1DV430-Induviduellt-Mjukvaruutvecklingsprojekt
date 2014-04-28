@@ -13,3 +13,6 @@ canvas {
 #backgroundCanvas {
     z-index:0;
 }
+.weapon {
+    z-index:3;
+}

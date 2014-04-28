@@ -1,4 +1,4 @@
-﻿Texture = function (width, height) {
+﻿Texture = function (width, height, staticTexture) {
 
     var canvas = document.createElement("canvas")
     var ctx = canvas.getContext("2d");
@@ -16,49 +16,58 @@
     var enemyImage = new Image();
     enemyImage.src = "Content/Image/3.png";
     var enemyPos = {
-        xpos: Math.floor((Math.random()*600)+1),
+        xpos: Math.floor((Math.random() * 600) + 1),
         ypos: Math.floor((Math.random() * 450) + 1),
         width: 20,
-        height:20
-    }
-    var terrain = {
-
+        height: 20
     }
 
-    this.bullet = function (bullets) {
-      
+    var map = []
+    map = staticTexture.getMap()
+
+
+    this.bullet = function (bullets, gun) {
+        var grenadeGrav = 0.5;
+        //setTimeout(function () { alert("Boom grenade off!!") }, 3000);
         for (var i = 0; i < bullets.length; i++) {
-            console.log(bullets[i].x)
-            ctx.fillRect(bullets[i].x -= bullets[i].vx, bullets[i].y -= bullets[i].vy, 5, 5);
-            ctx.stroke();
-            checkCol(bullets[i].x, bullets[i].y);
-            if (bullets[i].y < 0 || bullets[i].y > height ||bullets[i].x > width || bullets[i].x < 0 ) {
-                bullets.splice(i, 1)
+            if (gun == 0) {
+                ctx.fillRect(bullets[i].x -= bullets[i].vx, bullets[i].y -= bullets[i].vy, 5, 5);
             }
+            if (gun == 1) {
+                ctx.fillRect(bullets[i].x -= bullets[i].vx, bullets[i].y -= bullets[i].vy -= grenadeGrav, 15, 15);
+            }
+            ctx.stroke();
+            if (checkCol(bullets[i].x, bullets[i].y)) {
+                bullets.splice(i,1)
+            }
+            //checkCol(bullets[i].x, bullets[i].y);
         }
     }
-
     this.Player = function (xPos, yPos) {
         ctx.clearRect(0, 0, width, height)
         ctx.drawImage(playerImage, xPos, yPos);
-       
-
     }
-    this.aim = function (xPos, yPos,angle) {
-     
-        ctx.drawImage(aimImage, xPos -50* Math.cos(angle), yPos- 50* Math.sin(angle), 20, 20);
-      
-       
+    this.aim = function (xPos, yPos, angle) {
+        ctx.drawImage(aimImage, xPos - 50 * Math.cos(angle), yPos - 50 * Math.sin(angle), 20, 20);
     }
     this.Enemy = function () {
         ctx.drawImage(enemyImage, enemyPos.xpos, enemyPos.ypos);
     }
-    function checkCol(bulletX,bulletY) {
-  
-        
+    function checkCol(bulletX, bulletY) {
         if ((bulletX < enemyPos.xpos + enemyPos.width && bulletX > enemyPos.xpos - enemyPos.width) && (bulletY < enemyPos.ypos + enemyPos.height && bulletY > enemyPos.ypos - enemyPos.height)) {
             enemyPos.xpos = Math.floor((Math.random() * 600) + 1);
             enemyPos.ypos = Math.floor((Math.random() * 450) + 1);
+            return true;
+        }
+        for (var i = 0; i < map.length; i++) {
+            if ((bulletX < map[i].xPos + map[i].width && bulletX > map[i].xPos - map[i].width) &&
+                   (bulletY >= map[i].Ypos  && bulletY <= map[i].Ypos + map[i].height)) {
+                return true;
+            }
+        }
+        if (bulletY < 0 || bulletY > height || bulletX > width || bulletX < 0) {
+            return true;
         }
     }
+
 }
