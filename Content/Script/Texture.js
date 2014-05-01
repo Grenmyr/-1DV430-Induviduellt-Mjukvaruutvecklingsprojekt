@@ -1,11 +1,14 @@
 ﻿Texture = function (width, height, staticTexture) {
-
+    var mainDiv = document.getElementById("main");
     var canvas = document.createElement("canvas")
     var ctx = canvas.getContext("2d");
     canvas.width = width;
     canvas.height = height;
     canvas.setAttribute("id", "canvas")
-    document.body.appendChild(canvas);
+    mainDiv.appendChild(canvas);
+    
+    
+  
 
     var playerImage = new Image();
     playerImage.src = "Content/Image/unit.png";

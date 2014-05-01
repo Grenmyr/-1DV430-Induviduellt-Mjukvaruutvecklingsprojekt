@@ -1,25 +1,27 @@
 ﻿"use strict";
 var StaticTexture = function (width, height) {
+    var mainDiv = document.getElementById("main");
     var staticCanvas = document.createElement("canvas")
     var ctxTerrain = staticCanvas.getContext("2d");
     staticCanvas.width = width;
     staticCanvas.height = height;
     staticCanvas.setAttribute("id", "staticCanvas")
-    document.body.appendChild(staticCanvas);
+
+    mainDiv.appendChild(staticCanvas);
 
     var backgroundCanvas = document.createElement("canvas")
     var ctxbackground = backgroundCanvas.getContext("2d");
     backgroundCanvas.width = width;
     backgroundCanvas.height = height;
     backgroundCanvas.setAttribute("id", "backgroundCanvas")
-    document.body.appendChild(backgroundCanvas);
+    mainDiv.appendChild(backgroundCanvas);
 
     var weapon = document.createElement("canvas")
     var ctxweapon = backgroundCanvas.getContext("2d");
     backgroundCanvas.width = width;
     backgroundCanvas.height = height;
     backgroundCanvas.setAttribute("id", "weapon")
-    document.body.appendChild(weapon);
+    mainDiv.appendChild(weapon);
 
     var backgroundImage = new Image();
     var weaponImage = new Image();
