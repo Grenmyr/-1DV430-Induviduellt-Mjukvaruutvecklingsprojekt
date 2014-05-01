@@ -25,22 +25,31 @@
     var map = []
     map = staticTexture.getMap()
 
-
+    // Here is code for projectiles.
+    var grenadeTimer = null
     this.bullet = function (bullets, gun) {
-        var grenadeGrav = 0.5;
-        //setTimeout(function () { alert("Boom grenade off!!") }, 3000);
         for (var i = 0; i < bullets.length; i++) {
-            if (gun == 0) {
-                ctx.fillRect(bullets[i].x -= bullets[i].vx, bullets[i].y -= bullets[i].vy, 5, 5);
+            if (checkCol(bullets[i].x, bullets[i].y, gun)) {
+                if (gun === 0) { bullets.splice(i, 1); return }
+                if (gun === 1) {
+                    bullets[i].vy = 0;
+                    bullets[i].vx = 0;
+                    bullets[i].grenadeGrav = 0;
+                }
             }
-            if (gun == 1) {
-                ctx.fillRect(bullets[i].x -= bullets[i].vx, bullets[i].y -= bullets[i].vy -= grenadeGrav, 15, 15);
+            if (gun === 0) {
+                ctx.fillRect(bullets[i].x -= bullets[i].vx, bullets[i].y -= bullets[i].vy, 5, 5);
+            }            
+            if (gun === 1) {
+                ctx.fillRect(bullets[i].x -= bullets[i].vx, bullets[i].y -= bullets[i].vy -= bullets[i].grenadeGrav, 15, 15);
+                if (grenadeTimer === null) {
+                    setTimeout(function () {
+                        grenadeTimer = null, bullets.splice(0, 1)
+                    }, 3000);
+                    grenadeTimer = true;
+                }
             }
             ctx.stroke();
-            if (checkCol(bullets[i].x, bullets[i].y)) {
-                bullets.splice(i,1)
-            }
-            //checkCol(bullets[i].x, bullets[i].y);
         }
     }
     this.Player = function (xPos, yPos) {
@@ -53,7 +62,13 @@
     this.Enemy = function () {
         ctx.drawImage(enemyImage, enemyPos.xpos, enemyPos.ypos);
     }
-    function checkCol(bulletX, bulletY) {
+    function checkCol(bulletX, bulletY, gun) {
+        if (gun === 0) {
+          
+            if (bulletY < 0 || bulletY > height || bulletX > width || bulletX < 0) {
+                return true;
+            }
+        }
         if ((bulletX < enemyPos.xpos + enemyPos.width && bulletX > enemyPos.xpos - enemyPos.width) && (bulletY < enemyPos.ypos + enemyPos.height && bulletY > enemyPos.ypos - enemyPos.height)) {
             enemyPos.xpos = Math.floor((Math.random() * 600) + 1);
             enemyPos.ypos = Math.floor((Math.random() * 450) + 1);
@@ -61,13 +76,11 @@
         }
         for (var i = 0; i < map.length; i++) {// maste anpassa for bullet width också.
             if ((bulletX < map[i].xPos + map[i].width && bulletX > map[i].xPos - map[i].width) &&
-                   (bulletY >= map[i].Ypos  && bulletY <= map[i].Ypos + map[i].height)) {
+                   (bulletY+15 >= map[i].Ypos && bulletY+15 <= map[i].Ypos + map[i].height)) {
                 return true;
             }
         }
-        if (bulletY < 0 || bulletY > height || bulletX > width || bulletX < 0) {
-            return true;
-        }
+
     }
 
 }

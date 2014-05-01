@@ -6,10 +6,8 @@ var Init = function () {
         width: 800,
         height: 450,
         gunModolus: 0,
-        gravity:10
+        gravity: 10,
     }
-    
-
     var staticTextureConstructor = StaticTexture;
     StaticTexture = new staticTextureConstructor(800, 450)
     StaticTexture.background();
@@ -18,7 +16,7 @@ var Init = function () {
 
     var textureConstructor = Texture;
     Texture = new textureConstructor(800, 450, StaticTexture);
-   
+
 
     // My player object.
     var player = {
@@ -46,7 +44,7 @@ var Init = function () {
     // Loading current map array for collision check.
     var map = []
     map = StaticTexture.getMap();
-  
+
     // Two evenlistner to check keypresses and to delete keypress event. and also declare object.
     var keyPressed = {};
     addEventListener("keydown", function (e) {
@@ -57,20 +55,21 @@ var Init = function () {
         delete keyPressed[e.keyCode];
     }, false);
 
-        
-    function position() {
-         game.gravity = 10;
-        
 
+    function playerAction() {
+        game.gravity = 10;
+        //if (Texture.checkCol(player.x, player.y)) {
+        //    console.log("true;")
+        //}
         // Forloop checking if player is falling on texture, then gravity is set to 0.
         for (var i = 0; i < map.length; i++) {
+
             if ((player.x < map[i].xPos + map[i].width && player.x > map[i].xPos - map[i].width) &&
-                (player.y + player.gravity  >= map[i].Ypos - map[i].height && player.y + player.gravity <= map[i].Ypos + map[i].height)) {
+                (player.y + player.gravity >= map[i].Ypos - map[i].height && player.y + player.gravity <= map[i].Ypos + map[i].height)) {
                 game.gravity = 0;
                 player.y = map[i].Ypos - map[i].height;
                 player.jumping = false;
             }
-
         }
 
         // CONTROLS FOR MOVEMENT
@@ -98,20 +97,15 @@ var Init = function () {
             }
         }
 
-         // CONTROLS FOR AIM 
+        // CONTROLS FOR AIM 
         if (87 in keyPressed) { // Player aiming up on W key.
-            if (weapon.angle < 180) {
                 weapon.angle += weapon.speed;
-            }
-
         }
         if (83 in keyPressed) { // Player aiming down on S key.
-            if (weapon.angle > 0) {
                 weapon.angle -= weapon.speed;
-            }
         }
 
-         // CONTROLS FOR SWAP WEAPON AND FIRE
+        // CONTROLS FOR SWAP WEAPON AND FIRE
         if (17 in keyPressed) { // player swapping weapons on ctrl
             delete keyPressed[17];
             game.gunModolus += 1;
@@ -130,16 +124,15 @@ var Init = function () {
             if (Object.keys(bullets).length > 0) {
                 return
             }
-                bullets.push({
-                    x: player.x + player.sizex / 2,
-                    y: player.y + player.sizey / 2,
-                    vy: Math.sin(weapon.angle) * 20,
-                    vx: Math.cos(weapon.angle) * 20,
-                });
+            bullets.push({
+                x: player.x + player.sizex / 2,
+                y: player.y + player.sizey / 2,
+                vy: Math.sin(weapon.angle) * 25,
+                vx: Math.cos(weapon.angle) * 25,
+                grenadeGrav: 0.5
+            });
         }
 
-        
-        
         // Function to check if object collide with any of my texture sprites.
         function checkCol(tempX, tempY) {
             for (var i = 0; i < map.length; i++) {
@@ -192,20 +185,20 @@ var Init = function () {
             };
     }());
 
-        function draw() {
-            setTimeout(function () {
-                position();
-                window.requestAnimationFrame(draw);
-                Texture.Player(player.x, player.y);
-                Texture.aim(player.x, player.y, weapon.angle);
-                Texture.Enemy();
-                if (Object.keys(bullets).length > 0) {
-                    Texture.bullet(bullets, weapon.gun);
-                    console.log("dsadsa")
-                }
-            }, game.interval);
-        }
-        draw();
+    function draw() {
+        setTimeout(function () {
+            playerAction();
+            window.requestAnimationFrame(draw);
+            Texture.Player(player.x, player.y);
+            Texture.aim(player.x, player.y, weapon.angle);
+            Texture.Enemy();
+
+            if (Object.keys(bullets).length > 0) {
+                game.firing = Texture.bullet(bullets, weapon.gun);
+            }
+        }, game.interval);
+    }
+    draw();
 }
 window.onload = function () {
 
