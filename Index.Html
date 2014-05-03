@@ -1,23 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Rabbid Wars</title>
-  <!--  <script src="Content/Script/TestCode.js"></script>-->
+    <title>Rabbid Wars</title>
+    <!--  <script src="Content/Script/TestCode.js"></script>-->
 
-     
-     
-       <link rel="stylesheet" href="Content/style/Texture.css">
+
+
+    <link rel="stylesheet" href="Content/style/Texture.css">
 </head>
 
 <body>
-<!--<canvas id="canvas" style="position: absolute; left: 0; top: 0; z-index: 0;"></canvas>-->
-       <h1>Rabbid wars</h1>
-   <div id="main">
-    
-   </div>
+    <div id="menu">
+        <div class="drop-menu">
+            <span class="plus">+</span>Number of Rabbits 
+       
+        <ul class="sub-menu">
+            <li>
+                 <form action="Stage">
+                    <select name="stage">
+                        <option value="1">1 Rabbit</option>
+                        <option value="2">2 Rabbits</option>
+                        <option value="3">3 Rabbits</option>
+                    </select>
+                </form>
+            </li>
+        </ul>
+        </div>
+
+        <div class="drop-menu">
+            <span class="plus">+</span>Stage
+        <ul class="sub-menu">
+            <li>
+                <form action="Stage">
+                    <select name="stage">
+                        <option value="1">Stage 1</option>
+                        <option value="2">Stage 2</option>
+                        <option value="3">Stage 3</option>
+                        <option value="4">Stage 4</option>
+                    </select>
+                </form>
+            </li>
+        </ul>
+        </div>
+          <div class="drop-menu">
+             <a id="start">  
+                <img src="content/Image/start.png" alt="Start button" border="0" width="25" > 
+                 Starta spelet
+            </a>  
+              </div>
+    </div>
+    <div id="main">
+    </div>
     <script src="Content/Script/Texture.js"></script>
     <script src="Content/Script/StaticTexture.js"></script>
-     <script src="Content/Script/Game.js"></script>
+    <script src="Content/Script/Game.js"></script>
 </body>
 
-</html> 
+</html>

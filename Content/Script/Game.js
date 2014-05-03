@@ -1,5 +1,13 @@
 ﻿"use strict";
 var Init = function () {
+    var menu = document.getElementById("menu")
+    document.getElementById("start").onclick = function () {
+        menu.style.display = "none";
+        Game();
+    };
+}
+
+var Game = function () {
     var game = {
         interval: 10,
         //fps: 60,
@@ -99,10 +107,10 @@ var Init = function () {
 
         // CONTROLS FOR AIM 
         if (87 in keyPressed) { // Player aiming up on W key.
-                weapon.angle += weapon.speed;
+            weapon.angle += weapon.speed;
         }
         if (83 in keyPressed) { // Player aiming down on S key.
-                weapon.angle -= weapon.speed;
+            weapon.angle -= weapon.speed;
         }
 
         // CONTROLS FOR SWAP WEAPON AND FIRE
@@ -201,7 +209,7 @@ var Init = function () {
     draw();
 }
 window.onload = function () {
-
     Init();
+    //Game();
 
 };
