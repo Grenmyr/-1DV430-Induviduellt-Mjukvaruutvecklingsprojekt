@@ -6,7 +6,6 @@ var Init = function () {
         Game();
     };
 }
-
 var Game = function () {
     var game = {
         interval: 10,
