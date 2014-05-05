@@ -146,7 +146,7 @@ var Game = function () {
                 projectile.clear();
             }
             if (weapon.firearm == 0) {
-                projectile = new (player);
+                projectile = new Gun(player);
             }
             else {
 
