@@ -7,7 +7,12 @@ var Init = function () {
     };
 }
 var Game = function () {
+    var menu = document.getElementById("menu")
+    menu.style.display = "none";
+
     var game = {
+        x: 0,
+        y: 0,
         interval: 10,
         //fps: 60,
         width: 800,
@@ -24,6 +29,8 @@ var Game = function () {
     var textureConstructor = Texture;
     Texture = new textureConstructor(800, 450, StaticTexture);
 
+    var enemy = new Enemy(800, 450);
+
 
     // My player object.
     var player = {
@@ -34,19 +41,20 @@ var Game = function () {
         sizey: 20,
         sizex: 20,
         gravity: 10,
+        angle: 90,
         faceRight: true,
         move: true,
     }
 
     // My aim to player, perhaps integrate with player objekt in sp5?.
     var weapon = {
-        gun: 0,
+        firearm: 0,
         angle: 90,
         speed: 0.05,
     }
 
     // Array to creat new bullets or grenades or whatever is fired.
-    var bullets = [];
+    var projectile = null;
 
     // Loading current map array for collision check.
     var map = []
@@ -107,9 +115,11 @@ var Game = function () {
         // CONTROLS FOR AIM 
         if (87 in keyPressed) { // Player aiming up on W key.
             weapon.angle += weapon.speed;
+            player.angle += weapon.speed;
         }
         if (83 in keyPressed) { // Player aiming down on S key.
             weapon.angle -= weapon.speed;
+            player.angle -= weapon.speed;
         }
 
         // CONTROLS FOR SWAP WEAPON AND FIRE
@@ -117,27 +127,40 @@ var Game = function () {
             delete keyPressed[17];
             game.gunModolus += 1;
             if (game.gunModolus % 2 == 1) {
-                weapon.gun = 1;
-                StaticTexture.weapon(weapon.gun)
+                weapon.firearm = 1;
+                StaticTexture.weapon(weapon.firearm)
             }
             else {
-                weapon.gun = 0;
-                StaticTexture.weapon(weapon.gun)
+                weapon.firearm = 0;
+                StaticTexture.weapon(weapon.firearm)
             }
         }
-
+        
         if (32 in keyPressed) { // Player firing with space key.
             delete keyPressed[32];
-            if (Object.keys(bullets).length > 0) {
-                return
+            //if (Object.keys(bullets).length > 0) {
+            //    return
+            //}
+            //console.log(player.x)
+            if (projectile != null) {
+                projectile.clear();
             }
-            bullets.push({
-                x: player.x + player.sizex / 2,
-                y: player.y + player.sizey / 2,
-                vy: Math.sin(weapon.angle) * 25,
-                vx: Math.cos(weapon.angle) * 25,
-                grenadeGrav: 0.5
-            });
+            if (weapon.firearm == 0) {
+                projectile = new (player);
+            }
+            else {
+
+                projectile = new Grenade(player);
+            }
+            //bullets.push({
+            //    x: player.x + player.sizex / 2,
+            //    y: player.y + player.sizey / 2,
+            //    vy: Math.sin(weapon.angle) * 25,
+            //    vx: Math.cos(weapon.angle) * 25,
+            //    grenadeGrav: 0.5,
+            //    height: 5,
+            //    width : 5
+            //});
         }
 
         // Function to check if object collide with any of my texture sprites.
@@ -198,17 +221,44 @@ var Game = function () {
             window.requestAnimationFrame(draw);
             Texture.Player(player.x, player.y);
             Texture.aim(player.x, player.y, weapon.angle);
-            Texture.Enemy();
-
-            if (Object.keys(bullets).length > 0) {
-                game.firing = Texture.bullet(bullets, weapon.gun);
+            //Texture.Enemy();
+            enemy.draw();
+            if (projectile != null) {
+                projectile.draw();
             }
+            //console.log(Game.checkCollision)
+            //if (Object.keys(bullets).length > 0) {
+            //console.log(enemy.x)
+            if (projectile != null) {
+                if (Game.checkCollision(projectile, enemy)) {
+                    //game.firing = Texture.bullet(bullet, weapon.gun);
+
+                    projectile.clear();
+                    projectile = null;
+                }
+                else if (!Game.checkCollision(projectile, game) && weapon.firearm == 0) {
+                    projectile = null;
+                }
+            }
+
+            //}
         }, game.interval);
     }
     draw();
 }
+
+Game.checkCollision = function (obj1, obj2) {
+    if (obj1 == null || obj2 == null) {
+        return false;
+    }
+    return ((obj1.x - obj1.width < obj2.x + obj2.width && obj1.x + obj1.width > obj2.x) &&
+             (obj1.y - obj1.height < obj2.y + obj2.height && obj1.y + obj1.height > obj2.y))
+
+
+}
+
 window.onload = function () {
-    Init();
-    //Game();
+    //Init();
+    Game();
 
 };

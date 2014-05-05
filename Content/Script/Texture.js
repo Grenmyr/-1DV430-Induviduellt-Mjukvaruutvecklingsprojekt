@@ -7,23 +7,23 @@
     canvas.setAttribute("id", "canvas")
     mainDiv.appendChild(canvas);
     
-    
-  
-
     var playerImage = new Image();
     playerImage.src = "Content/Image/unit.png";
 
     var aimImage = new Image();
     aimImage.src = "Content/Image/aim.png";
 
-    var enemyImage = new Image();
-    enemyImage.src = "Content/Image/3.png";
-    var enemyPos = {
-        xpos: Math.floor((Math.random() * 600) + 1),
-        ypos: Math.floor((Math.random() * 450) + 1),
-        width: 20,
-        height: 20
-    }
+    //var enemyImage = new Image();
+    //enemyImage.src = "Content/Image/3.png";
+
+    //var EnemyPos = function () {
+    //    this.xpos = Math.floor((Math.random() * 600) + 1);
+    //    this.ypos = Math.floor((Math.random() * 450) + 1);
+    //}
+    //EnemyPos.prototype.width = 20;
+    //EnemyPos.prototype.height = 20;
+
+    //var enemy = new Enemy(width, height);
 
     var map = []
     map = staticTexture.getMap()
@@ -32,14 +32,17 @@
     var grenadeTimer = null
     this.bullet = function (bullets, gun) {
         for (var i = 0; i < bullets.length; i++) {
-            if (checkCol(bullets[i].x, bullets[i].y, gun)) {
-                if (gun === 0) { bullets.splice(i, 1); return }
+            
+            //if (checkCol(bullets[i].x, bullets[i].y, gun)) {
+                //if (gun === 0) { bullets.splice(i, 1); return }
                 if (gun === 1) {
                     bullets[i].vy = 0;
                     bullets[i].vx = 0;
                     bullets[i].grenadeGrav = 0;
                 }
-            }
+           
+            //}
+                //console.log("dsadsa")
             if (gun === 0) {
                 ctx.fillRect(bullets[i].x -= bullets[i].vx, bullets[i].y -= bullets[i].vy, 5, 5);
             }            
@@ -62,9 +65,9 @@
     this.aim = function (xPos, yPos, angle) {
         ctx.drawImage(aimImage, xPos - 50 * Math.cos(angle), yPos - 50 * Math.sin(angle), 20, 20);
     }
-    this.Enemy = function () {
-        ctx.drawImage(enemyImage, enemyPos.xpos, enemyPos.ypos);
-    }
+    //this.Enemy = function () {
+    //    ctx.drawImage(enemyImage, enemyPos.xpos, enemyPos.ypos);
+    //}
     function checkCol(bulletX, bulletY, gun) {
         if (gun === 0) {
           
@@ -77,13 +80,16 @@
             enemyPos.ypos = Math.floor((Math.random() * 450) + 1);
             return true;
         }
-        for (var i = 0; i < map.length; i++) {// maste anpassa for bullet width också.
+        for (var i = 0;  i < map.length; i++) {// maste anpassa for bullet width också.
             if ((bulletX < map[i].xPos + map[i].width && bulletX > map[i].xPos - map[i].width) &&
                    (bulletY+15 >= map[i].Ypos && bulletY+15 <= map[i].Ypos + map[i].height)) {
                 return true;
             }
         }
-
     }
 
 }
+// Test av protoyp, test är funktionsnamn för det som ligger på prototypen av texture.
+Texture.prototype.Test = function () { return 5; }
+//a = Texture.Test();
+//console.log(a)
