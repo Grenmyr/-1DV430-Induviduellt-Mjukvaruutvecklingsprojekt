@@ -6,8 +6,8 @@ var Gun = function (player) {
 
     this.x = player.x;
     this.y = player.y;
-    this.vy = Math.sin(player.angle) * 25;
-    this.vx = Math.cos(player.angle) * 25;
+    this.vy = Math.sin(player.angle) * 20;
+    this.vx = Math.cos(player.angle) * 20;
     this.height = 5
     this.width = 5
 }

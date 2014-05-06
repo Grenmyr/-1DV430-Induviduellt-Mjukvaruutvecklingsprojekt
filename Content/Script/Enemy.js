@@ -15,14 +15,43 @@ var Enemy = function (width, height) {
 
     this.enemyImage = new Image();
     this.enemyImage.src = "Content/Image/3.png";
+    this.healthImage = new Image();
+    this.healthImage.src = "Content/Image/healthbar.png";
 
+    this.health = 4;
     this.x = Math.floor((Math.random() * 600) + 1);
-    this.y = 400;
- }
- Enemy.prototype.draw = function () {
-     this.ctx.drawImage(this.enemyImage, this.x, this.y);
- }
-Enemy.prototype.width = 20;
-Enemy.prototype.height = 20;
+    this.y = 50;
+}
+Enemy.prototype = {
+    width: 20,
+    height: 20,
+    gravity: 10,
+    aimSpeed: 0.05,
+    speed: 5
+}
+Enemy.prototype.clear = function (player) {
+    this.ctx.clearRect(0, 0, 800, 450)
+
+}
+Enemy.prototype.draw = function () {
+    this.clear();
+    if (this.health >= 0) {
+        this.ctx.drawImage(this.enemyImage, this.x, this.y);
+        if (this.health == 4) {
+            this.ctx.drawImage(this.healthImage, 0, 0, 58, 58, this.x - 10, this.y - 25, 40, 40);
+        }
+        if (this.health == 3) {
+
+            this.ctx.drawImage(this.healthImage, 0, 0, 58 * (this.health / 4), 58, this.x - 5, this.y - 25, 40 * (this.health / 4), 40);
+        }
+        if (this.health == 2) {
+            this.ctx.drawImage(this.healthImage, 0, 0, 58 * (this.health / 4), 58, this.x, this.y - 25, 40 * (this.health / 4), 40);
+        }
+        if (this.health == 1) {
+            this.ctx.drawImage(this.healthImage, 0, 0, 58 * (this.health / 4), 58, this.x + 5, this.y - 25, 40 * (this.health / 4), 40);
+        }
+    }
+}
+
 
 

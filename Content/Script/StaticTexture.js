@@ -63,12 +63,12 @@ var StaticTexture = function (width, height) {
     // Testmap
     var map = [
         { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, x: 300, y: 430, width: 20, height: 20 },
-        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, x: 360, y: 430, width: 20, height: 20 },
+        { SpriteposX: 58, SpritePosy: 0, xLength: 58, Yheight: 58, x: 360, y: 430, width: 20, height: 20 },
         { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, x: 360, y: 360, width: 20, height: 20 },
         { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, x: 320, y: 400, width: 20, height: 20 },
         { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, x: 340, y: 400, width: 20, height: 20 },
         { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, x: 550, y: 400, width: 20, height: 20 },
-        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, x: 360, y: 380, width: 20, height: 20 }
+        { SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, x: 360, y: 380, width: 20, height: 20 }
     ];
 
 

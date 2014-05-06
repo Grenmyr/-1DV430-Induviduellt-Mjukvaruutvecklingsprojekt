@@ -26,6 +26,7 @@ var Game = function () {
         height: 450,
         gunModolus: 0,
         gravity: 10,
+        map :  []
     }
     var staticTexture = new StaticTexture(800, 450)
     staticTexture.background();
@@ -46,8 +47,8 @@ var Game = function () {
     var projectile = null;
 
     // Loading current map array for collision check.
-    var map = []
-    map = staticTexture.getMap();
+   
+    game.map = staticTexture.getMap();
 
     // Two evenlistner to check keypresses and to delete keypress event. and also declare object.
     var keyPressed = {};
@@ -62,16 +63,19 @@ var Game = function () {
 
     function playerAction() {
         game.gravity = 5;
+        
 
-        // Forloop checking if player is falling on texture, then gravity is set to 0.
-        for (var i = 0; i < map.length; i++) {
-            if ((player.x < map[i].x + map[i].width && player.x > map[i].x - map[i].width) &&
-                (player.y + player.gravity >= map[i].y - map[i].height && player.y + player.gravity <= map[i].y + map[i].height)) {
-                game.gravity = 0;
-                player.y = map[i].y - map[i].height;
-                player.jumping = false;
-            }
-        }
+        Game.gravity(player,game);
+        Game.gravity(enemy,game);
+        //// Forloop checking if player is falling on texture, then gravity is set to 0.
+        //for (var i = 0; i < map.length; i++) {
+        //    if ((player.x < map[i].x + map[i].width && player.x > map[i].x - map[i].width) &&
+        //        (player.y + player.gravity >= map[i].y - map[i].height && player.y + player.gravity <= map[i].y + map[i].height)) {
+        //        game.gravity = 0;
+        //        player.y = map[i].y - map[i].height;
+        //        player.jumping = false;
+        //    }
+        //}
 
         // CONTROLS FOR MOVEMENT
         if (38 in keyPressed) { // Player jumping on Up key
@@ -95,11 +99,12 @@ var Game = function () {
                 player.x -= player.speed;
                 player.faceRight = false;
             }
+            //var oldX = player.x;
             //player.x -= player.speed;
-            //for (var i = 0; i < map.length; i++) {
-            //    if (Game.checkCollision(player, map[i])) {
+            //for (var i = 0; i < game.map.length; i++) {
+            //    if (Game.checkCollision(player, game.map[i])) {
             //        console.log(true)
-            //        player.x += player.speed;
+            //        player.x = oldX;
             //        player.faceRight = false;
             //    }
             //    else {
@@ -116,12 +121,14 @@ var Game = function () {
                 player.x += player.speed;
                 player.faceRight = true;
             }
+            //var oldX = player.x;
+            //var oldY = player.y;
             //player.x += player.speed;
-            //for (var i = 0; i < map.length; i++) {
+            //for (var i = 0; i < game.map.length; i++) {
 
-            //    if (Game.checkCollision(player, map[i])) {
+            //    if (Game.checkCollision(player, game.map[i])) {
             //        console.log(true)
-            //        player.x -= player.speed;
+            //        player.x = oldX;
             //        player.faceRight = true;
             //    }
             //    else {
@@ -169,27 +176,46 @@ var Game = function () {
 
         // Function to check if object collide with any of my texture sprites.
         function checkCol(tempX, tempY) {
-            for (var i = 0; i < map.length; i++) {
-                if ((tempX < map[i].x + map[i].width && tempX > map[i].x - map[i].width) && (tempY < map[i].y + map[i].height && tempY > map[i].y - map[i].height)) {
+            for (var i = 0; i < game.map.length; i++) {
+                if ((tempX < game.map[i].x + game.map[i].width && tempX > game.map[i].x - game.map[i].width) && (tempY < game.map[i].y + game.map[i].height && tempY > game.map[i].y - game.map[i].height)) {
                     player.move = false;
                 }
             }
             return player.move;
         }
 
-        // Checking borders of game and keep within.
-        player.y += game.gravity;
-        if (player.y >= game.height - player.height) {
-            player.y = game.height - player.width;
-            player.jumping = false;
+        gameGravity(player);
+        gameGravity(enemy);
+
+        function gameGravity(obj) {
+            obj.y += game.gravity;
+            if (obj.y >= game.height - obj.height) {
+                obj.y = game.height - obj.width;
+                obj.jumping = false;
+            }
+            if (obj.x >= game.width - obj.width) {
+                obj.x = game.width - obj.width;
+            }
+            else if (obj.x <= 0) {
+                obj.x = 0;
+            }
+            obj.move = true;
         }
-        if (player.x >= game.width - player.width) {
-            player.x = game.width - player.width;
-        }
-        else if (player.x <= 0) {
-            player.x = 0;
-        }
-        player.move = true;
+
+        //// Checking borders of game and keep within.
+        //player.y += game.gravity;
+        ////enemy.y += game.gravity;
+        //if (player.y >= game.height - player.height) {
+        //    player.y = game.height - player.width;
+        //    player.jumping = false;
+        //}
+        //if (player.x >= game.width - player.width) {
+        //    player.x = game.width - player.width;
+        //}
+        //else if (player.x <= 0) {
+        //    player.x = 0;
+        //}
+        //player.move = true;
     }
 
     // requestAnimationFrame polyfill by Erik Möller
@@ -232,6 +258,7 @@ var Game = function () {
             }
             if (projectile != null) {
                 if (Game.checkCollision(projectile, enemy)) {
+                    enemy.health -= 1;
                     projectile.clear();
                     projectile = null;
                 }
@@ -239,8 +266,8 @@ var Game = function () {
                     projectile = null;
                 }
 
-                for (var i = 0; i < map.length; i++) {
-                    if (Game.checkCollision(projectile, map[i])) {
+                for (var i = 0; i < game.map.length; i++) {
+                    if (Game.checkCollision(projectile, game.map[i])) {
                         projectile = null;
                     }
                 }
@@ -250,6 +277,18 @@ var Game = function () {
     }
     draw();
 }
+Game.gravity = function (obj, game) {
+    var map = game.map;
+    // Forloop checking if player is falling on texture, then gravity is set to 0.
+    for (var i = 0; i < map.length; i++) {
+        if ((obj.x < map[i].x + map[i].width && obj.x > map[i].x - map[i].width) &&
+            (obj.y + obj.gravity >= map[i].y - map[i].height && obj.y + obj.gravity <= map[i].y + map[i].height)) {
+            obj.y = map[i].y - map[i].height;
+            obj.jumping = false;
+        }
+    }
+}
+
 
 Game.checkCollision = function (obj1, obj2) {
     if (obj1 == null || obj2 == null) {
@@ -262,5 +301,4 @@ Game.checkCollision = function (obj1, obj2) {
 window.onload = function () {
     Init();
     Game();
-
 };
