@@ -1,12 +1,10 @@
-﻿var Grenade = function (player) {
+﻿"use strict";
+var Grenade = function (player) {
     var that = this;
+
     var mainDiv = document.getElementById("main");
-    var canvas = document.createElement("canvas")
+    var canvas = document.getElementById("canvas")
     this.ctx = canvas.getContext("2d");
-    canvas.width = 800;
-    canvas.height = 450;
-    canvas.setAttribute("id", "grenade")
-    mainDiv.appendChild(canvas);
    
     this.x = player.x;
     this.y = player.y;
@@ -17,8 +15,6 @@
     this.grenadeGrav = 0.3;
 
     setTimeout(function () {
-        
-        console.log(that.clear)
         that.clear();
         that.x = -9999;
     }, 3000);
@@ -31,9 +27,7 @@ Grenade.prototype.clear = function (player) {
 
 Grenade.prototype.draw = function (player) {
     this.clear();
-   
     if (this.y > 450 ) { this.y = 450-this.height, this.vy = 0, this.vx = 0,this.grenadeGrav = 0 }
     this.ctx.fillRect(this.x -= this.vx, this.y -= this.vy -= this.grenadeGrav, this.width, this.height);
- 
 }
 

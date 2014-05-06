@@ -1,10 +1,16 @@
-﻿ var Enemy = function (width, height) {
+﻿"use strict";
+var Enemy = function (width, height) {
+    //var mainDiv = document.getElementById("main");
+    // //var canvas = document.createElement("canvas")
+    //var canvas = document.getElementById("canvas")
+    //this.ctx = canvas.getContext("2d");
+
     var mainDiv = document.getElementById("main");
     var canvas = document.createElement("canvas")
     this.ctx = canvas.getContext("2d");
-    canvas.width = width;
-    canvas.height = height;
-    canvas.setAttribute("id", "Enemy")
+    canvas.width = 800;
+    canvas.height = 450;
+    canvas.setAttribute("id", "enemy")
     mainDiv.appendChild(canvas);
 
     this.enemyImage = new Image();

@@ -1,19 +1,15 @@
-﻿var Gun = function (player) {
+﻿"use strict";
+var Gun = function (player) {
     var mainDiv = document.getElementById("main");
-    var canvas = document.createElement("canvas")
+    var canvas = document.getElementById("canvas")
     this.ctx = canvas.getContext("2d");
-    canvas.width = 800;
-    canvas.height = 450;
-    canvas.setAttribute("id", "gun")
-    mainDiv.appendChild(canvas);
-   
+
     this.x = player.x;
     this.y = player.y;
-    this.vy = Math.sin(player.angle) * 10;
-    this.vx = Math.cos(player.angle) * 10;
+    this.vy = Math.sin(player.angle) * 25;
+    this.vx = Math.cos(player.angle) * 25;
     this.height = 5
     this.width = 5
-
 }
 
 Gun.prototype.clear = function (player) {
