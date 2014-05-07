@@ -21,6 +21,9 @@ var Enemy = function (width, height) {
     this.health = 4;
     this.x = Math.floor((Math.random() * 600) + 1);
     this.y = 50;
+    this.angle = 90;
+    this.fire = false;
+  
 }
 Enemy.prototype = {
     width: 20,
@@ -36,7 +39,7 @@ Enemy.prototype.clear = function (player) {
 Enemy.prototype.draw = function () {
     this.clear();
     if (this.health >= 0) {
-        this.ctx.drawImage(this.enemyImage, this.x, this.y);
+        this.ctx.drawImage(this.enemyImage, this.x, this.y,this.width,this.height);
         if (this.health == 4) {
             this.ctx.drawImage(this.healthImage, 0, 0, 58, 58, this.x - 10, this.y - 25, 40, 40);
         }
@@ -52,6 +55,7 @@ Enemy.prototype.draw = function () {
         }
     }
 }
+
 
 
 

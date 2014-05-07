@@ -8,16 +8,16 @@ var Grenade = function (player) {
    
     this.x = player.x;
     this.y = player.y;
-    this.vy = Math.sin(player.angle) * 20;
-    this.vx = Math.cos(player.angle) * 20;
+    this.vy = Math.sin(player.angle) * 15;
+    this.vx = Math.cos(player.angle) * 15;
     this.height = 10;
     this.width = 10;
     this.grenadeGrav = 0.3;
 
-    setTimeout(function () {
-        that.clear();
-        that.x = -9999;
-    }, 3000);
+    //setTimeout(function () {
+    //    that.clear();
+    //    that.x = -9999;
+    //}, 3000);
 
 }
 

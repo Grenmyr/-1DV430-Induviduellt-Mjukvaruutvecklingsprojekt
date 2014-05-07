@@ -17,12 +17,14 @@
     this.aimImage.src = "Content/Image/aim.png";
     this.healthImage = new Image();
     this.healthImage.src = "Content/Image/healthbar.png";
+
     this.jumping = false;
     this.x = 0;
     this.y = 0;
     this.angle = 90;
     this.firearm = 0;
-    this.health = 1;
+    this.health = 4;
+    this.fired = false;
 
 }
 Player.prototype = {
