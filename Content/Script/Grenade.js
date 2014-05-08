@@ -34,7 +34,15 @@ Grenade.prototype.checkColl = function (obj1, obj2) {
 Grenade.prototype.draw = function (player) {
      
     this.clear();
-    if (this.y > 450 ) { this.y = 450-this.height, this.vy = 0, this.vx = 0,this.grenadeGrav = 0 }
+    if (this.y > 450) {
+        this.y = 450 - this.height
+        this.vy = 0
+        this.vx = 0
+        this.grenadeGrav = 0
+        Game.projectile = null;
+        Game.playerTurn = !Game.playerTurn;
+
+    }
     this.ctx.fillRect(this.x -= this.vx, this.y -= this.vy -= this.grenadeGrav, this.width, this.height);
 }
 

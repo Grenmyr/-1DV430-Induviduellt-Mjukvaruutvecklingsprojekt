@@ -213,21 +213,21 @@ var Game = function () {
             Game.playerTurn = !Game.playerTurn;
 
         }
-        if (Game.projectile != null &&  !Game.checkCollision(Game.projectile, game) && player.firearm == 1) {
+        //if (Game.projectile != null &&  Game.checkCollision(Game.projectile, game) && player.firearm == 1) {
            
             
-            //Game.projectile.y = 400;
-           
-            Game.projectile.vy = 0;
-            Game.projectile.vx = 0;
-            var granade = Game.projectile;
-            setTimeout(function () {
-                granade.clear();
-            }, 1000);
-            //Game.projectile.clear();
-            Game.projectile = null;
-            Game.playerTurn = !Game.playerTurn;
-        }
+        //    //Game.projectile.y = 400;
+        //   console.log("inne i granat")
+        //    //Game.projectile.vy = 0;
+        //    //Game.projectile.vx = 0;
+        //    var granade = Game.projectile;
+        //    setTimeout(function () {
+        //        granade.clear();
+        //    }, 1000);
+        //    //Game.projectile.clear();
+        //    Game.projectile = null;
+        //    Game.playerTurn = !Game.playerTurn;
+        //}
 
 
         for (var i = 0; i < game.map.length; i++) {
