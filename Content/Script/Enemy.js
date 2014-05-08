@@ -20,9 +20,11 @@ var Enemy = function (width, height) {
 
     this.health = 4;
     this.x = Math.floor((Math.random() * 600) + 1);
-    this.y = 50;
+    this.y = 0;
     this.angle = 90;
     this.fire = false;
+    this.vy = 0;
+  
   
 }
 Enemy.prototype = {
@@ -37,6 +39,22 @@ Enemy.prototype.clear = function (player) {
 
 }
 Enemy.prototype.draw = function () {
+    if (this.vy > -5) {
+        this.vy -= this.gravity;
+    }
+    this.y -= this.vy;
+    if (this.y + this.height > Game.game.height) {
+        this.y = Game.game.height - this.height;
+        this.jumping = false;
+    }
+    for (var i = 0; i < Game.map.length; i++) {
+
+        if (Game.checkCollision(this, Game.map[i])) {
+            this.y += this.vy;
+            this.jumping = false;
+
+        }
+    }
     this.clear();
     if (this.health >= 0) {
         this.ctx.drawImage(this.enemyImage, this.x, this.y,this.width,this.height);

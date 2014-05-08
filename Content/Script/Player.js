@@ -26,11 +26,12 @@
     this.health = 4;
     this.fired = false;
     this.faceLeft = true;
+    this.vy = 0;
 
 }
 Player.prototype = {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     gravity: 10,
     aimSpeed: 0.05,
     speed: 5
@@ -43,7 +44,24 @@ Player.prototype.clear = function (player) {
 
 }
 Player.prototype.draw = function () {
+    if (this.vy > -5) {
+        this.vy -= this.gravity;
+    }
+    this.y -= this.vy;
+    if (this.y + this.height > Game.game.height) {
+        this.y = Game.game.height - this.height;
+        this.jumping = false;
+    }
+    for (var i = 0; i < Game.map.length; i++) {
+
+        if (Game.checkCollision(this, Game.map[i])) {
+            this.y += this.vy;
+            this.jumping = false;
+
+        }
+    }
     this.clear();
+    this.ctx.fillRect(this.x, this.y, this.width, this.height);
     this.ctx.drawImage(this.playerImage, 0, 0, 114, 98, this.x, this.y, this.width, this.height);
 
     this.ctx.drawImage(this.aimImage, this.x - 50 * Math.cos(this.angle), this.y - 50 * Math.sin(this.angle), 20, 20);

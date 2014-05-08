@@ -16,6 +16,13 @@ var Gun = function (shooter) {
 Gun.prototype.clear = function (shooter) {
     this.ctx.clearRect(this.x - 2, this.y - 2, this.width + 4, this.height + 4)
 }
+Gun.prototype.checkColl = function (obj1, obj2) {
+    if (obj1 == null || obj2 == null) {
+        return false;
+    }
+    return ((obj1.x + obj1.width > obj2.x && obj1.x < obj2.x + obj2.width) &&
+             (obj1.y + obj1.height > obj2.y && obj1.y < obj2.y + obj2.height))
+}
 
 Gun.prototype.draw = function (shooter) {
     this.clear();
