@@ -68,27 +68,27 @@ var Game = function () {
 
         if (Game.playerTurn == true && player.fired == false) {
             // CONTROLS FOR MOVEMENT
-            if (38 in keyPressed) { // Player jumping on Up key
-                if (!player.jumping) {
-                    //player.jumping = true;
-                    //player.y -= 80;
+            //if (38 in keyPressed) { // Player jumping on Up key
+            //    if (!player.jumping) {
+            //        //player.jumping = true;
+            //        //player.y -= 80;
 
-                    var tempX = player.x
-                    var tempY = player.y -= 50;
-                    if (checkCol(tempX, tempY)) {
-                        player.jumping = true;
-                        player.y = tempY;
+            //        var tempX = player.x
+            //        var tempY = player.y -= 50;
+            //        if (checkCol(tempX, tempY)) {
+            //            player.jumping = true;
+            //            player.y = tempY;
 
-                    }
-                }
-            }
+            //        }
+            //    }
+            //}
             if (37 in keyPressed) { // Player holding left key.
-                var tempX = player.x - player.speed;
-                var tempY = player.y;
-                if (checkCol(tempX, tempY)) {
-                    player.x -= player.speed;
-                    player.faceRight = false;
-                }
+                //var tempX = player.x - player.speed;
+                //var tempY = player.y;
+                //if (checkCol(tempX, tempY)) {
+                //    player.x -= player.speed;
+                //    player.faceRight = false;
+                //}
                 //var oldX = player.x;
                 //player.x -= player.speed;
                 //for (var i = 0; i < game.map.length; i++) {
@@ -102,29 +102,40 @@ var Game = function () {
                 //    }
 
                 //}
+                player.x -= player.speed;
+                for (var i = 0; i < game.map.length; i++) {
+
+                    if (Game.checkCollision(player, game.map[i])) {
+                        player.x += player.speed
+                        console.log("tjohej")
+                        player.faceRight = true;
+                        break;
+                    }
+
+                }
 
             }
             if (39 in keyPressed) { // Player holding right key.
-                var tempX = player.x + player.speed;
-                var tempY = player.y;
-                if (checkCol(tempX, tempY)) {
-                    player.x += player.speed;
-                    player.faceRight = true;
-                }
-                //var oldX = player.x;
-                //var oldY = player.y;
-                //player.x += player.speed;
-                //for (var i = 0; i < game.map.length; i++) {
+                //var tempX = player.x + player.speed;
+                //var tempY = player.y;
+                //if (checkCol(tempX, tempY)) {
+                //    player.x += player.speed;
+                //    player.faceRight = true;
+                //}
+                
 
-                //    if (Game.checkCollision(player, game.map[i])) {
-                //        console.log(true)
-                //        player.x = oldX;
-                //        player.faceRight = true;
-                //    }
-                //    else {
-                //        console.log(false);
-                //    }
-                //} 
+              
+                player.x += player.speed;
+                for (var i = 0; i < game.map.length; i++) {
+                    
+                    if (Game.checkCollision(player, game.map[i])) {
+                        player.x -= player.speed
+                        console.log("tjohej")
+                        player.faceRight = true;
+                        break;
+                    }
+                
+                } 
             }
 
             // CONTROLS FOR AIM 
@@ -168,14 +179,18 @@ var Game = function () {
             }
         }
         // Function to check if object collide with any of my texture sprites.
-        function checkCol(tempX, tempY) {
-            for (var i = 0; i < game.map.length; i++) {
-                if ((tempX < game.map[i].x + game.map[i].width && tempX > game.map[i].x - game.map[i].width) && (tempY < game.map[i].y + game.map[i].height && tempY > game.map[i].y - game.map[i].height)) {
-                    player.move = false;
-                }
-            }
-            return player.move;
-        }
+        //function checkCol(tempX, tempY) {
+        //    for (var i = 0; i < game.map.length; i++) {
+        //        if ((tempX < game.map[i].x + game.map[i].width && tempX +player.width > game.map[i].x - game.map[i].width) && (tempY < game.map[i].y + game.map[i].height && tempY > game.map[i].y - game.map[i].height)) {
+        //            player.move = false;
+        //        }
+        //    }
+        //    console.log(player.y + player.height)
+        //    console.log(game.map[0].y)
+        //    console.log(player.x + player.width)
+        //    console.log(game.map[0].x)
+        //    return player.move;
+        //}
 
 
         gameGravity(player);
@@ -184,7 +199,7 @@ var Game = function () {
         function gameGravity(obj) {
             obj.y += game.gravity;
             if (obj.y >= game.height - obj.height) {
-                obj.y = game.height - obj.width;
+                obj.y = game.height - obj.height;
                 obj.jumping = false;
             }
             if (obj.x >= game.width - obj.width) {
@@ -244,8 +259,7 @@ var Game = function () {
     function draw() {
         //setTimeout(function () {
         playerAction();
-        player.draw()
-        enemy.draw();
+        
        
         if (Game.projectile != null) {
             Game.projectile.draw();
@@ -316,7 +330,8 @@ var Game = function () {
                 }
             }
         //}
-
+            player.draw()
+            enemy.draw();
         window.requestAnimationFrame(draw);
         //}, game.interval);
     }

@@ -48,7 +48,7 @@ var StaticTexture = function (width, height) {
         };
     }
     this.terrain = function () {
-        terrain.src = "Content/Image/spriteMap.png";
+        terrain.src = "Content/Image/rabbit.png";
         terrain.onload = function () {
             for (var i = 0; i < map.length; i++) {
                 ctxTerrain.drawImage(terrain, map[i].SpriteposX, map[i].SpritePosy, map[i].xLength, map[i].Yheight, map[i].x, map[i].y, 20, 20);
@@ -62,13 +62,13 @@ var StaticTexture = function (width, height) {
 
     // Testmap
     var map = [
-        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, x: 300, y: 430, width: 20, height: 20 },
-        { SpriteposX: 58, SpritePosy: 0, xLength: 58, Yheight: 58, x: 360, y: 430, width: 20, height: 20 },
-        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, x: 360, y: 360, width: 20, height: 20 },
-        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, x: 320, y: 400, width: 20, height: 20 },
-        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, x: 340, y: 400, width: 20, height: 20 },
-        { SpriteposX: 116, SpritePosy: 0, xLength: 58, Yheight: 58, x: 550, y: 400, width: 20, height: 20 },
-        { SpriteposX: 0, SpritePosy: 0, xLength: 58, Yheight: 58, x: 360, y: 380, width: 20, height: 20 }
+        { SpriteposX: 350, SpritePosy: 0, xLength: 50, Yheight: 50, x: 100, y: 430, width: 20, height: 20 },
+        { SpriteposX: 350, SpritePosy: 0, xLength: 50, Yheight: 50, x: 200, y: 400, width: 20, height: 20 },
+        { SpriteposX: 350, SpritePosy: 0, xLength: 50, Yheight: 50, x: 360, y: 360, width: 20, height: 20 },
+        { SpriteposX: 350, SpritePosy: 0, xLength: 50, Yheight: 50, x: 320, y: 400, width: 20, height: 20 },
+        { SpriteposX: 350, SpritePosy: 0, xLength: 50, Yheight: 50, x: 340, y: 400, width: 20, height: 20 },
+        { SpriteposX: 350, SpritePosy: 0, xLength: 50, Yheight: 50, x: 550, y: 400, width: 20, height: 20 },
+        { SpriteposX: 350, SpritePosy: 0, xLength: 50, Yheight: 50, x: 360, y: 380, width: 20, height: 20 }
     ];
 
 
