@@ -10,7 +10,7 @@ var Enemy = function (width, height) {
     this.ctx = canvas.getContext("2d");
     canvas.width = 800;
     canvas.height = 450;
-    canvas.setAttribute("id", "enemy")
+    canvas.setAttribute("id", "enemy");
     mainDiv.appendChild(canvas);
 
     this.enemyImage = new Image();
@@ -26,18 +26,18 @@ var Enemy = function (width, height) {
     this.vy = 0;
   
   
-}
+};
 Enemy.prototype = {
     width: 20,
     height: 20,
     gravity: 10,
     aimSpeed: 0.05,
     speed: 5
-}
+};
 Enemy.prototype.clear = function (player) {
     this.ctx.clearRect(0, 0, 800, 450)
 
-}
+};
 Enemy.prototype.draw = function () {
     if (this.vy > -5) {
         this.vy -= this.gravity;
