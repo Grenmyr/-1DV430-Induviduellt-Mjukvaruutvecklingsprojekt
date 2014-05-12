@@ -24,7 +24,7 @@ var Game = function () {
         width: canvas.width,
         height: canvas.height,
         gunModolus: 0,
-        map: [],
+        map: []
 
     };
 //    Initialize StaticTexture,js to load lvl configuration and weapon settings.
@@ -39,6 +39,8 @@ var Game = function () {
     var enemy = new Enemy(canvas.width, canvas.height);
     var player = new Player(canvas.width, canvas.height);
 
+
+
     // Two eventlistner to check keypresses and to delete keypress event. and also declare object.
     var keyPressed = {};
     addEventListener("keydown", function (e) {
@@ -51,42 +53,46 @@ var Game = function () {
 
     // Function to handle all keypress events.
     function playerAction() {
+        player.move = false;
         if (Game.playerTurn == true && player.fired == false) {
             // CONTROLS FOR MOVEMENT
             if (38 in keyPressed) { // Player jumping on Up key
                 if (!player.jumping) {
                     player.jumping = true;
-                    player.vy = +50;
+                    player.vy = +60;
                 }
             }
             if (37 in keyPressed) { // Player holding left key.
                 player.x -= player.speed;
+                player.faceLeft = true;
+                player.move = true;
                 for (var i = 0; i < Game.map.length; i++) {
                     if (Game.checkCollision(player, Game.map[i])) {
                         player.x += player.speed;
-                        player.faceRight = true;
+
                         break;
                     }
                 }
                 if (player.x  <= 0 ) {
                     player.x = 0;
-                    player.faceRight = false;
                 }
             }
             if (39 in keyPressed) { // Player holding right key.
                 player.x += player.speed;
+                player.faceLeft = false;
+                player.move = true;
                 for (var i = 0; i < Game.map.length; i++) {
 
                     if (Game.checkCollision(player, Game.map[i])) {
                         player.x -= player.speed;
-                        player.faceRight = true;
+
                         break;
                     }
                 }
                 if (player.x + player.width >= game.width) {
                     player.x = game.width - player.width;
-                    player.faceRight = true;
                 }
+
             }
             // CONTROLS FOR AIM 
             if (87 in keyPressed) { // Player aiming up on W key.
@@ -195,6 +201,8 @@ var Game = function () {
             }
         }
         player.draw();
+
+
         enemy.draw();
         window.requestAnimationFrame(draw);
         //}, game.interval);
@@ -225,10 +233,13 @@ Game.checkCollision = function (obj1, obj2) {
 
 Game.enemyTurn = function (enemy, player) {
     player.fired = false;
+
     Game.enemyAim(enemy, player);
     setTimeout(function () {
         if (Game.projectile == null && !Game.playerTurn) {
+
             Game.projectile = new Gun(enemy);
+
         }
     }, 3000);
 };
