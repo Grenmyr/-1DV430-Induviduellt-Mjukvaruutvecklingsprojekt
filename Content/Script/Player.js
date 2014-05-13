@@ -21,9 +21,9 @@ var Player = function (width, height) {
     this.healthImage.src = "Content/Image/healthbar.png";
 
     this.jumping = false;
-    this.x = 0;
-    this.y = 0;
-    this.angle = 90;
+    this.x = 420;
+    this.y = 300;
+    this.angle = 0;
     this.firearm = 0;
     this.health = 4;
     this.fired = false;
@@ -41,7 +41,7 @@ Player.prototype = {
     width: 40,
     height: 40,
     gravity: 10,
-    aimSpeed: 0.05,
+    aimSpeed: 0.03,
     speed: 5
 
 
@@ -74,14 +74,14 @@ Player.prototype.draw = function () {
         }
     }
 
-    //    this.ctx.fillRect(this.x, this.y, this.width, this.height);
-    //if (this.faceLeft == true) {
-    //    this.ctx.drawImage(this.aimImage, this.x  - 100 * Math.cos(this.angle), this.y  - 100 * Math.sin(this.angle), 20, 20);
-    //}
-    //if (this.faceLeft == false) {
-    //    this.ctx.drawImage(this.aimImage, this.x+this.width/2 - 100 * Math.cos(this.angle), this.y+this.height/2 - 100 * Math.sin(this.angle), 20, 20);
-    //}
-    this.ctx.drawImage(this.aimImage, this.x - 50 * Math.cos(this.angle), this.y - 50 * Math.sin(this.angle), 20, 20);
+        //this.ctx.fillRect(this.x, this.y, this.width, this.height);
+    if (this.faceLeft == true) {
+        this.ctx.drawImage(this.aimImage, this.x  - 100 * Math.cos(this.angle), (this.y  - 100 * Math.sin(this.angle)) + this.height / 2 - 10, 20, 20);
+    }
+    if (this.faceLeft == false) {
+        this.ctx.drawImage(this.aimImage, this.x - 100 * Math.cos(this.angle), this.y - 100 * Math.sin(this.angle) + this.height / 2 - 10, 20, 20);
+    }
+    //this.ctx.drawImage(this.aimImage, this.x - 50 * Math.cos(this.angle), this.y - 50 * Math.sin(this.angle), 20, 20);
     if (this.health == 4) {
         this.ctx.drawImage(this.healthImage, 0, 0, 58, 58, this.x -10, this.y - 25, this.width, this.height);
     }

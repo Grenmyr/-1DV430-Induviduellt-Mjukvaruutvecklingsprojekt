@@ -66,6 +66,11 @@ var Game = function () {
             }
             if (37 in keyPressed) { // Player holding left key.
                 player.x -= player.speed;
+                if (player.faceLeft == false) {
+                    player.angle = -player.angle + Math.PI;
+                    player.angle %= Math.PI
+                    console.log(player.angle);
+                }
                 player.faceLeft = true;
                 player.move = true;
                 for (var i = 0; i < Game.map.length; i++) {
@@ -80,6 +85,10 @@ var Game = function () {
             }
             if (39 in keyPressed) { // Player holding right key.
                 player.x += player.speed;
+                if (player.faceLeft == true) {
+                    player.angle %= Math.PI
+                    player.angle = -player.angle - Math.PI;
+                }
                 player.faceLeft = false;
                 player.move = true;
                 for (var i = 0; i < Game.map.length; i++) {
@@ -96,10 +105,34 @@ var Game = function () {
             }
             // CONTROLS FOR AIM 
             if (87 in keyPressed) { // Player aiming up on W key.
-                player.angle += player.aimSpeed;
+                if (player.faceLeft == true) {
+                    player.angle += player.aimSpeed;
+                    if (player.angle > Math.PI / 2) {
+                        player.angle = Math.PI / 2;
+                    }
+                }
+                else {
+                    player.angle -= player.aimSpeed;
+                    if (player.angle < -Math.PI * 1.5) {
+                        player.angle = -Math.PI * 1.5;
+                    }
+                }
+               
             }
             if (83 in keyPressed) { // Player aiming down on S key.
-                player.angle -= player.aimSpeed;
+                if (player.faceLeft == true) {
+                    player.angle -= player.aimSpeed;
+                    if (player.angle < -Math.PI / 2) {
+                        player.angle = -Math.PI / 2;
+                    }
+                }
+                else {
+                    console.log(player.angle);
+                    player.angle += player.aimSpeed;
+                    if (player.angle > -Math.PI / 2) {
+                        player.angle = -Math.PI / 2;
+                    }
+                }
             }
 
             // CONTROLS FOR SWAP WEAPON AND FIRE
@@ -240,14 +273,12 @@ Game.enemyTurn = function (enemy, player) {
     Game.enemyAim(enemy, player);
     setTimeout(function () {
         if (Game.projectile == null && !Game.playerTurn) {
-
             Game.projectile = new Gun(enemy);
-
         }
     }, 3000);
 };
 Game.enemyAim = function (enemy, player) {
-    enemy.angle = Math.atan2(enemy.y - player.y-player.height/2, enemy.x - player.x);
+    enemy.angle = Math.atan2(enemy.y - player.y, enemy.x - player.x);
 };
 
 window.onload = function () {

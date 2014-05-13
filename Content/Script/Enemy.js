@@ -14,7 +14,7 @@ var Enemy = function (width, height) {
     mainDiv.appendChild(canvas);
 
     this.enemyImage = new Image();
-    this.enemyImage.src = "Content/Image/3.png";
+    this.enemyImage.src = "Content/Image/rabbit.png";
     this.healthImage = new Image();
     this.healthImage.src = "Content/Image/healthbar.png";
 
@@ -29,8 +29,8 @@ var Enemy = function (width, height) {
   
 };
 Enemy.prototype = {
-    width: 20,
-    height: 20,
+    width: 40,
+    height: 40,
     gravity: 10,
     aimSpeed: 0.05,
     speed: 5
@@ -53,12 +53,11 @@ Enemy.prototype.draw = function () {
         if (Game.checkCollision(this, Game.map[i])) {
             this.y += this.vy;
             this.jumping = false;
-
         }
     }
     this.clear();
-    if (this.health >= 0) {
-        this.ctx.drawImage(this.enemyImage, this.x, this.y,this.width,this.height);
+    //if (this.health >= 0) {
+        this.ctx.drawImage(this.enemyImage, 0, 198, 114, 98, this.x, this.y, this.width, this.height);
         if (this.health == 4) {
             this.ctx.drawImage(this.healthImage, 0, 0, 58, 58, this.x - 10, this.y - 25, 40, 40);
         }
@@ -72,7 +71,7 @@ Enemy.prototype.draw = function () {
         if (this.health == 1) {
             this.ctx.drawImage(this.healthImage, 0, 0, 58 * (this.health / 4), 58, this.x + 5, this.y - 25, 40 * (this.health / 4), 40);
         }
-    }
+    //}
 }
 
 
