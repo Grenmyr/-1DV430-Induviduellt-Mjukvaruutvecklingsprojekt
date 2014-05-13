@@ -3,6 +3,7 @@ var Init = function () {
     //var menu = document.getElementById("menu")
     //document.getElementById("start").onclick = function () {
     //    menu.style.display = "none";
+    //    Game();
     //};
     var mainDiv = document.getElementById("main");
     var canvas = document.createElement("canvas");
@@ -24,7 +25,8 @@ var Game = function () {
         width: canvas.width,
         height: canvas.height,
         gunModolus: 0,
-        map: []
+        difficult: 0
+        //map: []
 
     };
 //    Initialize StaticTexture,js to load lvl configuration and weapon settings.
@@ -69,7 +71,6 @@ var Game = function () {
                 for (var i = 0; i < Game.map.length; i++) {
                     if (Game.checkCollision(player, Game.map[i])) {
                         player.x += player.speed;
-
                         break;
                     }
                 }
@@ -85,7 +86,6 @@ var Game = function () {
 
                     if (Game.checkCollision(player, Game.map[i])) {
                         player.x -= player.speed;
-
                         break;
                     }
                 }
@@ -209,20 +209,21 @@ var Game = function () {
     }
     draw();
 };
-Game.checkFall = function (obj, game) {
-    var map = Game.map;
-    // Forloop checking if player is falling on texture, then gravity is set to 0.
-    for (var i = 0; i < map.length; i++) {
-        if ((obj.x < map[i].x + map[i].width && obj.x > map[i].x - map[i].width) &&
-            (obj.y + obj.gravity >= map[i].y - map[i].height && obj.y + obj.gravity <= map[i].y + map[i].height)) {
-            obj.y = map[i].y - map[i].height;
-            obj.jumping = false;
-        }
-    }
-};
+//Game.checkFall = function (obj, game) {
+//    var map = Game.map;
+//    // Forloop checking if player is falling on texture, then gravity is set to 0.
+//    for (var i = 0; i < map.length; i++) {
+//        if ((obj.x < map[i].x + map[i].width && obj.x > map[i].x - map[i].width) &&
+//            (obj.y + obj.gravity >= map[i].y - map[i].height && obj.y + obj.gravity <= map[i].y + map[i].height)) {
+//            obj.y = map[i].y - map[i].height;
+//            obj.jumping = false;
+//        }
+//    }
+//};
 Game.projectile = null;
 Game.playerTurn = true;
 
+// Checkcollision function, handling all collisions in game, except 1 for grenade that i want dirrefent formula.
 Game.checkCollision = function (obj1, obj2) {
     if (obj1 == null || obj2 == null) {
         return false;
@@ -231,6 +232,8 @@ Game.checkCollision = function (obj1, obj2) {
              (obj1.y + obj1.height > obj2.y  && obj1.y < obj2.y+obj2.height))
 };
 
+
+// Functions handling enemy Turn and Aim.
 Game.enemyTurn = function (enemy, player) {
     player.fired = false;
 
@@ -244,7 +247,7 @@ Game.enemyTurn = function (enemy, player) {
     }, 3000);
 };
 Game.enemyAim = function (enemy, player) {
-    enemy.angle = Math.atan2(enemy.y - player.y, enemy.x - player.x);
+    enemy.angle = Math.atan2(enemy.y - player.y-player.height/2, enemy.x - player.x);
 };
 
 window.onload = function () {

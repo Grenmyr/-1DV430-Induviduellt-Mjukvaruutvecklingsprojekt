@@ -31,7 +31,7 @@ var Player = function (width, height) {
     this.vy = 0;
     this.drawModolus = 0;
     this.move = false;
-//    this.animate = new Animate(this.x,this.y);
+
     setInterval(function () {
         that.drawModolus +=1
     }, 100);
@@ -74,9 +74,14 @@ Player.prototype.draw = function () {
         }
     }
 
-//    this.ctx.fillRect(this.x, this.y, this.width, this.height);
+    //    this.ctx.fillRect(this.x, this.y, this.width, this.height);
+    //if (this.faceLeft == true) {
+    //    this.ctx.drawImage(this.aimImage, this.x  - 100 * Math.cos(this.angle), this.y  - 100 * Math.sin(this.angle), 20, 20);
+    //}
+    //if (this.faceLeft == false) {
+    //    this.ctx.drawImage(this.aimImage, this.x+this.width/2 - 100 * Math.cos(this.angle), this.y+this.height/2 - 100 * Math.sin(this.angle), 20, 20);
+    //}
     this.ctx.drawImage(this.aimImage, this.x - 50 * Math.cos(this.angle), this.y - 50 * Math.sin(this.angle), 20, 20);
-
     if (this.health == 4) {
         this.ctx.drawImage(this.healthImage, 0, 0, 58, 58, this.x -10, this.y - 25, this.width, this.height);
     }
@@ -121,7 +126,5 @@ Player.prototype.animatePlayer = function () {
     }
     else{
         this.ctx.drawImage(this.playerImage, 0, 98, 114, 98, this.x, this.y, this.width, this.height);
-    }
-    if(this.jumping == true) {
     }
 };

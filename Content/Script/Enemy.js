@@ -19,8 +19,9 @@ var Enemy = function (width, height) {
     this.healthImage.src = "Content/Image/healthbar.png";
 
     this.health = 4;
-    this.x = Math.floor((Math.random() * 600) + 1);
-    this.y = 0;
+    //this.x = Math.floor((Math.random() * 600) + 1);
+    this.x = 500
+    this.y = 300;
     this.angle = 90;
     this.fire = false;
     this.vy = 0;
