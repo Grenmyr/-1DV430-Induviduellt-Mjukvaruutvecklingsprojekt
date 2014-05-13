@@ -26,6 +26,11 @@ Gun.prototype.clear = function (shooter) {
 //             (obj1.y + obj1.height > obj2.y && obj1.y < obj2.y + obj2.height))
 //}
 
+Gun.prototype.update = function () {
+    this.x -= this.vx;
+    this.y -= this.vy;
+}
+
 Gun.prototype.draw = function (shooter) {
     this.clear();
     this.ctx.fillRect(this.x -= this.vx, this.y -= this.vy, this.width, this.height);

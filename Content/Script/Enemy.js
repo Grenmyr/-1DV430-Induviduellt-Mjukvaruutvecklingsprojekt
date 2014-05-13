@@ -19,12 +19,15 @@ var Enemy = function (width, height) {
     this.healthImage.src = "Content/Image/healthbar.png";
 
     this.health = 4;
-    //this.x = Math.floor((Math.random() * 600) + 1);
-    this.x = 500
+    this.x = Math.floor((Math.random() * 600) + 1);
+    //this.x = 500
     this.y = 300;
     this.angle = 90;
     this.fire = false;
     this.vy = 0;
+    this.faceLeft = false;
+    this.moveRange = 100;
+    this.target = false;
   
   
 };
@@ -57,7 +60,12 @@ Enemy.prototype.draw = function () {
     }
     this.clear();
     //if (this.health >= 0) {
-        this.ctx.drawImage(this.enemyImage, 0, 198, 114, 98, this.x, this.y, this.width, this.height);
+    if (this.faceLeft == true) {
+        this.ctx.drawImage(this.enemyImage, 0, 196, 114, 98, this.x, this.y, this.width, this.height);
+    }
+    else {
+        this.ctx.drawImage(this.enemyImage, 0, 300, 114, 98, this.x, this.y, this.width, this.height);
+    }
         if (this.health == 4) {
             this.ctx.drawImage(this.healthImage, 0, 0, 58, 58, this.x - 10, this.y - 25, 40, 40);
         }
