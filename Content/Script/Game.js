@@ -2,9 +2,14 @@
 var Init = function () {
     var menu = document.getElementById("menu")
     document.getElementById("start").onclick = function () {
+        selectMap = selectMap.options[selectMap.selectedIndex].value;
+        amountUnits = amountUnits.options[amountUnits.selectedIndex].value;
         menu.style.display = "none";
-        Game();
+        Game(selectMap, amountUnits);
     };
+    var selectMap = document.getElementById('map');
+    var amountUnits = document.getElementById('units');
+
     var mainDiv = document.getElementById("main");
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext("2d");
@@ -13,11 +18,13 @@ var Init = function () {
     canvas.setAttribute("id", "canvas");
     mainDiv.appendChild(canvas);
 
+    var selectedText = selectMap.options[selectMap.selectedIndex].text;
 };
-var Game = function () {
+var Game = function (Map,units) {
     var menu = document.getElementById("menu");
     menu.style.display = "none";
-
+    console.log(Map);
+    console.log(units);
     var game = {
         x: 0,
         y: 0,
