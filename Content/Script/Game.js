@@ -21,7 +21,7 @@ var Init = function () {
     var selectedText = selectMap.options[selectMap.selectedIndex].text;
 };
 var Game = function (Map,units) {
-    var menu = document.getElementById("menu");
+    var menu = document.getElementById("menu2");
     menu.style.display = "none";
     console.log(Map);
     console.log(units);
