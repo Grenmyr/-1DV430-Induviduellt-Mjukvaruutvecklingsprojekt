@@ -1,4 +1,6 @@
-﻿* {
+﻿/*CSS setting big general style, also some reset css.*/
+
+* {
     margin: 0;
     padding: 0;
 }
@@ -14,17 +16,25 @@ body {
 main {
     display: flex;
     justify-content: space-between;
-    height: 80%;
+    height: 62%;
+}
+aside {
+    display: flex;
+    justify-content: space-between;
+    height: 20%
 }
 header {
     height:10%;
     border:1px solid;
 }
 
+
+
+/*CSS for Canvas and Game*/
+
 canvas {
     position: absolute;
 }
-
 #canvas {
     z-index: 2;
 }
@@ -54,6 +64,7 @@ canvas {
     margin:auto auto;
 }
 
+/*CSS for mainpage, menu, leftdiv and rightdiv on page.*/
 h1 {
     text-align: center;
     font-size:2.5em;
@@ -61,26 +72,29 @@ h1 {
 }
 
 #menu {
-    height: 70%;
+    height: 100%;
     width: 31%;
     border: 1px solid;
     text-align: center;
+ 
 }
 
 #rightDiv {
-    height: 70%;
+    height: 100%;
     border: 1px solid;
     width: 31%;
     background-image: url("../Image/blackRabbit.png");
     background-repeat: no-repeat;
     background-position: left,0;
     background-size: 90.2%;
+  
 
 
 }
 
 #leftDiv {
-    height: 70%;
+
+    height: 100%;
     border: 1px solid;
     width: 31%;
     background-image: url("../Image/brownRabbit.png");
@@ -89,7 +103,20 @@ h1 {
     background-size: 90.2%;
 
 }
-/* Credit to http://www.webstuffshare.com/2010/06/simple-css3-dropdown-menu/, i copied alot from them*/
+
+#controlsDiv {
+    height: 100%;
+    width: 65.5%;
+    border: 1px solid;
+}
+
+#rulesDiv {
+     height: 100%;
+    width: 31%;
+    border: 1px solid;
+}
+
+/* Some Credit to http://www.webstuffshare.com/2010/06/simple-css3-dropdown-menu/, i got some inspiration from them. */
 
 .pusher {
     height:16%;
