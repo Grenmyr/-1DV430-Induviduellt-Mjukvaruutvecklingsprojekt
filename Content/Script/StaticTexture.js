@@ -1,6 +1,6 @@
 ﻿"use strict";
 var StaticTexture = function (width, height) {
-    var mainDiv = document.getElementById("main");
+    var mainDiv = document.getElementById("gameDiv");
     var staticCanvas = document.createElement("canvas");
     var ctxTerrain = staticCanvas.getContext("2d");
     staticCanvas.width = width;

@@ -6,11 +6,10 @@
 html, body {
     width: 100%;
     height: 100%;
-    
 }
 
 body {
-    
+   font-style:italic;
 }
 main {
     display: flex;
@@ -19,7 +18,7 @@ main {
 }
 header {
     height:10%;
-    border:3px solid;
+    border:1px solid;
 }
 
 canvas {
@@ -50,94 +49,104 @@ canvas {
     z-index: 3;
 }
 
-#main {
-    /*margin-left: 20%;
-    margin-right: auto;*/
+#gameDiv {
+    
+    margin:auto auto;
 }
 
 h1 {
     text-align: center;
+    font-size:2.5em;
+
 }
 
 #menu {
     height: 70%;
     width: 31%;
-    border: 3px solid;
+    border: 1px solid;
     text-align: center;
 }
 
 #rightDiv {
     height: 70%;
-    border: 3px solid;
+    border: 1px solid;
     width: 31%;
     background-image: url("../Image/blackRabbit.png");
     background-repeat: no-repeat;
-    background-position: 0,0;
+    background-position: left,0;
     background-size: 90.2%;
+
+
 }
 
 #leftDiv {
     height: 70%;
-    border: 3px solid;
+    border: 1px solid;
     width: 31%;
     background-image: url("../Image/brownRabbit.png");
     background-repeat: no-repeat;
-    background-position: 0,0;
+    background-position: right,0;
     background-size: 90.2%;
+
 }
-
-
-
 /* Credit to http://www.webstuffshare.com/2010/06/simple-css3-dropdown-menu/, i copied alot from them*/
+
+.pusher {
+    height:16%;
+}
 
 .drop-menu {
     display: block;
     margin-right: auto;
     margin-left: auto;
     text-align: left;
-    padding: 10px 10px;
-    font-size: 22px;
-    height: 25px;
+    padding: 4% 4%;
+    font-size: 1.62em;
+    height: 16%;
     max-height: 25px;
-    width: 290px;
+    width: 62%;
     background: #fff;
     cursor: pointer;
     border: 1px solid #f6f0e4;
 }
 
-    .drop-menu:hover .sub-menu {
-        display: inline-block;
-    }
+.drop-menu select{
+    float:right;
+}
 
-.sub-menu {
+    /*.drop-menu:hover .sub-menu {
+        display: inline-block;
+    }*/
+
+/*.sub-menu {
     display: none;
-    width: 100px;
+    width: 32%;
     background: #fff;
-    padding: 10px 10px;
-    margin-left: 300px;
-    margin-top: -35px;
+    padding: 4% 2%;
+    margin-left: 108%;
+    margin-top: -30px;
     border: 1px solid #fff;
     -webkit-box-shadow: 0px 13px 25px rgba(0,0,0, 0.2);
     -moz-box-shadow: 0px 13px 25px rgba(0,0,0, 0.2);
     box-shadow: 0px 13px 25px rgba(0,0,0, 0.2);
-}
+}*/
 
-    .sub-menu li {
+    /*.sub-menu li {
         list-style-type: none;
         display: block;
         border-bottom: 1px dotted #eaeaea;
         font-size: 19px;
         height: 22px;
         padding: 8px 0;
-    }
+    }*/
 
-        .sub-menu li img {
+        /*.sub-menu li img {
             margin-right: .5em;
-        }
+        }*/
 
-        .sub-menu li:hover {
+        /*.sub-menu li:hover {
             border-bottom: 1px dotted #bababa;
-        }
+        }*/
 
 .plus {
     display: inline-block;

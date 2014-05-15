@@ -5,7 +5,7 @@ var Enemy = function (width, height) {
     //var canvas = document.getElementById("canvas")
     //this.ctx = canvas.getContext("2d");
 
-    var mainDiv = document.getElementById("main");
+    var mainDiv = document.getElementById("gameDiv");
     var canvas = document.createElement("canvas")
     this.ctx = canvas.getContext("2d");
     canvas.width = 800;

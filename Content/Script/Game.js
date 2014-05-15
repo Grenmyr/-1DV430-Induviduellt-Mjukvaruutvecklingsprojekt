@@ -10,7 +10,7 @@ var Init = function () {
     var selectMap = document.getElementById('map');
     var amountUnits = document.getElementById('units');
 
-    var mainDiv = document.getElementById("main");
+    var mainDiv = document.getElementById("gameDiv");
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext("2d");
     canvas.width = 800;
@@ -21,7 +21,7 @@ var Init = function () {
     var selectedText = selectMap.options[selectMap.selectedIndex].text;
 };
 var Game = function (Map,units) {
-    var menu = document.getElementById("menu2");
+    var menu = document.getElementById("menuContent");
     menu.style.display = "none";
     console.log(Map);
     console.log(units);

@@ -10,15 +10,22 @@
 </head>
 
 <body>
-    <header></header>
-    <main id="menu2">
+    <header>
+        <h1>Rabbid Wars</h1>
+    </header>
+    <main id="menuContent">
     <div id="leftDiv">
     </div>
     <div id="menu">
+        <div class="pusher"></div>
         <div class="drop-menu">
             <span class="plus">+</span>Number of Rabbits 
-       
-        <ul class="sub-menu">
+         <select id="units">
+                        <option value="1">1 Rabbit</option>
+                        <option value="2">2 Rabbits</option>
+                        <option value="3">3 Rabbits</option>
+                    </select>
+        <!--<ul class="sub-menu">
             <li>
                 <form>
                     <select id="units">
@@ -28,12 +35,20 @@
                     </select>
                 </form>
             </li>
-        </ul>
+        </ul>-->
         </div>
 
         <div class="drop-menu">
             <span class="plus">+</span>Stage
-        <ul class="sub-menu">
+     
+                    <select id="map">
+                        <option value="1">Stage 1</option>
+                        <option value="2">Stage 2</option>
+                        <option value="3">Stage 3</option>
+                        <option value="4">Stage 4</option>
+                    </select>
+      
+     <!--   <ul class="sub-menu">
             <li>
                 <form>
                     <select id="map">
@@ -44,21 +59,22 @@
                     </select>
                 </form>
             </li>
-        </ul>
+        </ul>-->
         </div>
         <div class="drop-menu">
             <a id="start">
-                <img src="content/Image/start.png" alt="Start button" border="0" width="25">
+              
                 Starta spelet
+                  <img src="content/Image/start.png" alt="Start button" border="0" width="25">
             </a>
         </div>
     </div>
     <div id="rightDiv">
     </div>
         </main>
-
-    <div id="main">
+          <div id="gameDiv">
     </div>
+   
     <!-- <script src="Content/Script/Texture.js"></script>-->
     <script src="Content/Script/Animate.js.js"></script>
     <script src="Content/Script/StaticTexture.js"></script>
