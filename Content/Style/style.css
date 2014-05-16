@@ -60,8 +60,10 @@ canvas {
 }
 
 #gameDiv {
-    
+    display:none;
     margin:auto auto;
+margin-left:26%;
+height:60%;
 }
 
 /*CSS for mainpage, menu, leftdiv and rightdiv on page.*/

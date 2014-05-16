@@ -23,6 +23,11 @@ var Init = function () {
 var Game = function (Map,units) {
     var menu = document.getElementById("menuContent");
     menu.style.display = "none";
+    //var aside = document.getElementById('asideContent');
+    //aside.style.display = "none";
+    //aside.style.display = "block";
+    var mainDiv = document.getElementById("gameDiv");
+    mainDiv.style.display = 'block';
     console.log(Map);
     console.log(units);
     var game = {
