@@ -1,15 +1,12 @@
 ﻿"use strict";
 var Gun = function (shooter) {
-
-    var mainDiv = document.getElementById("main");
-    var canvas = document.getElementById("canvas")
+    var canvas = document.getElementById("canvas");
     this.ctx = canvas.getContext("2d");
-    console.log(shooter.height)
     this.x = shooter.x;
     this.y = shooter.y + (shooter.height / 2);
     this.vy = Math.sin(shooter.angle) * 5;
     this.vx = Math.cos(shooter.angle) * 5;
-    this.height = 5
+    this.height = 5;
     this.width = 5
    
  
