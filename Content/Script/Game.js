@@ -225,9 +225,8 @@ var Game = function (Map,units) {
         }
         if (Game.playerTurn == false) {
             console.log("playerturn == false");
-            Game.enemyTurn(enemy, player);
+            enemy.enemyTurn( player);
             if (Game.checkCollision(Game.projectile, player)) {
-                console.log("Hit player");
                 player.health -= 1;
                 Game.projectile.clear();
                 Game.projectile = null;
@@ -235,17 +234,14 @@ var Game = function (Map,units) {
             }
         }
         if (Game.projectile != null && !Game.checkCollision(Game.projectile, game) && player.firearm == 0) {
-            console.log("utanfor banan");
             Game.projectile = null;
             Game.playerTurn = !Game.playerTurn;
         }
         for (var i = 0; i < Game.map.length; i++) {
             if (Game.checkCollision(Game.projectile, Game.map[i])) {
-                console.log("Träffade textur");
                 Game.projectile.clear();
                 Game.projectile = null;
                 Game.playerTurn = !Game.playerTurn;
-                console.log(Game.playerTurn);
             }
         }
         player.draw();
@@ -278,64 +274,6 @@ Game.checkCollision = function (obj1, obj2) {
     }
     return ((obj1.x + obj1.width > obj2.x && obj1.x < obj2.x + obj2.width) &&
              (obj1.y + obj1.height > obj2.y && obj1.y < obj2.y + obj2.height))
-};
-
-
-// Functions handling enemy Turn and Aim.
-Game.enemyTurn = function (enemy, player) {
-    player.fired = false;
-
-    var tempProjectile = new Gun(enemy);
-    var temp = true;
-    while (temp) {
-        tempProjectile.update();
-        if (!Game.checkCollision(tempProjectile, Game.game)) {
-            temp = false;
-        } else if (Game.checkCollision(tempProjectile, player)) {
-            console.log("dsadsa")
-            enemy.target = true;
-            temp = false;
-        } else {
-            for (var i = 0; i < Game.map.length; i++) {
-                if (Game.checkCollision(tempProjectile, Game.map[i])) {
-                    console.log("Träffade textur");
-                    enemy.target = false;
-                    temp = false;
-                    break;
-                }
-            }
-        }
-    }
-    console.log(enemy.target);
-    if (enemy.target == false) {
-        if (player.x < enemy.x) {
-            enemy.faceLeft = true;
-            enemy.speed = -5;
-        }
-        else {
-            enemy.faceLeft = false;
-        }
-
-        if (enemy.moveRange >= 0) {
-            enemy.x += enemy.speed;
-            enemy.moveRange -= 10;
-            for (var i = 0; i < Game.map.length; i++) {
-                if (Game.checkCollision(enemy, Game.map[i])) {
-                    enemy.x -= 10
-                    enemy.speed = -enemy.speed
-                }
-            }
-        }
-    }
-    Game.enemyAim(enemy, player);
-    setTimeout(function () {
-        if (Game.projectile == null && !Game.playerTurn) {
-            Game.projectile = new Gun(enemy);
-        }
-    }, 1000);
-};
-Game.enemyAim = function (enemy, player) {
-    enemy.angle = Math.atan2(enemy.y - player.y, enemy.x - player.x);
 };
 
 window.onload = function () {

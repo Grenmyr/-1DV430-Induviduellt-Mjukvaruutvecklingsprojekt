@@ -82,6 +82,58 @@ Enemy.prototype.draw = function () {
     //}
 }
 
+Enemy.prototype.enemyTurn = function (player) {
+    player.fired = false;
 
+    var tempProjectile = new Gun(this);
+    var temp = true;
+    while (temp) {
+        tempProjectile.update();
+        if (!Game.checkCollision(tempProjectile, Game.game)) {
+            temp = false;
+        } else if (Game.checkCollision(tempProjectile, player)) {
+            this.target = true;
+            temp = false;
+        } else {
+            for (var i = 0; i < Game.map.length; i++) {
+                if (Game.checkCollision(tempProjectile, Game.map[i])) {
+                    this.target = false;
+                    temp = false;
+                    break;
+                }
+            }
+        }
+    }
+    if (this.target == false) {
+        if (player.x < this.x) {
+            this.faceLeft = true;
+            this.speed = -5;
+        }
+        else {
+            this.faceLeft = false;
+        }
+
+        if (this.moveRange >= 0) {
+            this.x += this.speed;
+            this.moveRange -= 10;
+            for (var i = 0; i < Game.map.length; i++) {
+                if (Game.checkCollision(this, Game.map[i])) {
+                    this.x -= 10
+                    this.speed = -this.speed
+                }
+            }
+        }
+    }
+    this.enemyAim(player);
+    var that = this;
+    setTimeout(function () {
+        if (Game.projectile == null && !Game.playerTurn) {
+            Game.projectile = new Gun(that);
+        }
+    }, 1000);
+};
+Enemy.prototype.enemyAim = function (player) {
+    this.angle = Math.atan2(this.y - player.y, this.x - player.x);
+};
 
 

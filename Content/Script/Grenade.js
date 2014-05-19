@@ -13,12 +13,6 @@ var Grenade = function (player) {
     this.height = 10;
     this.width = 10;
     this.grenadeGrav = 0.3;
-
-    //setTimeout(function () {
-    //    that.clear();
-    //    that.x = -9999;
-    //}, 3000);
-
 };
 
 Grenade.prototype.clear = function (player) {
@@ -40,8 +34,6 @@ Grenade.prototype.draw = function (player) {
         this.vx = 0;
         this.grenadeGrav = 0;
         setTimeout(function () {
-            that.clear();
-            console.log(Game.projectile);
             that.clear();
             Game.projectile = null;
             Game.playerTurn = !Game.playerTurn;
