@@ -11,6 +11,7 @@ var Init = function () {
     var amountUnits = document.getElementById('units');
 
     var mainDiv = document.getElementById("gameDiv");
+    
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext("2d");
     canvas.width = 800;
@@ -27,7 +28,11 @@ var Game = function (Map,units) {
     //aside.style.display = "none";
     //aside.style.display = "block";
     var mainDiv = document.getElementById("gameDiv");
+    var rulesDiv = document.getElementById("rulesDiv");
+    var ctrlDiv = document.getElementById("controlsDiv");
     mainDiv.style.display = 'block';
+    rulesDiv.style.display = 'block';
+    ctrlDiv.style.display = 'block';
     console.log(Map);
     console.log(units);
     var game = {
