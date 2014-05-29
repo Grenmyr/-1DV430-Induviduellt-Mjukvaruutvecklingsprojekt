@@ -48,9 +48,10 @@
                     </select>
         </div>
      <!--   <div class="drop-menu">-->
+        <div class="pusher"></div>
             <a id="start">
              <!--  <span class="plus">+</span>Starta spelet-->
-                  <img src="content/Image/start.png" alt="Start button" border="0" width="50">
+                  <img src="content/Image/startButton.png" alt="Start button" border="0" width="150">
             </a>
    <!--     </div>-->
     
@@ -65,18 +66,21 @@
 
     <div id="rulesDiv">
         <div class="span">
-            <div class="drop-menu">
+            <div class="drop-menu"id="homeLink">
                 <span class="plus">+</span>Home
+                 <a>
+                  <img src="content/Image/home.png" alt="Return button" border="0" width="30">
+            </a>
             </div>
-            <div class="drop-menu">
+            <div class="drop-menu" id="controlLink">
                 <span class="plus">+</span>Controls
+                      <a>
+                 <img src="content/Image/control.png" alt="controls button"  border="0" width="30">
+                          </a>
             </div>
             <div class="drop-menu">
                 <span class="plus">+</span>Sound
             </div>
-
-            
-
             <h3>Rules</h3>
 
             <h4>Turn based game:</h4>
@@ -90,9 +94,9 @@
             <p>Winner is the one with any units left, after winning a map, player open up next map.</p>
         </div>
     </div>
-   
 
-   <!--    </aside>-->
+
+    <!--    </aside>-->
     <div id="gameDiv">
     </div>
 
@@ -103,12 +107,12 @@
 
     <!-- <script src="Content/Script/Texture.js"></script>-->
     <script src="Content/Script/Animate.js.js"></script>
+    <script src="Content/Script/ClientHelp.js"></script>
     <script src="Content/Script/StaticTexture.js"></script>
     <script src="Content/Script/Enemy.js"></script>
     <script src="Content/Script/Gun.js"></script>
     <script src="Content/Script/Grenade.js"></script>
     <script src="Content/Script/Player.js"></script>
-
     <script src="Content/Script/Game.js"></script>
 </body>
 

@@ -21,8 +21,8 @@ var Player = function (width, height) {
     this.healthImage.src = "Content/Image/healthbar.png";
 
     this.jumping = false;
-    this.x = 420;
-    this.y = 300;
+    this.x = 225;
+    this.y = 200;
     this.angle = 0;
     this.firearm = 0;
     this.health = 4;
@@ -43,10 +43,6 @@ Player.prototype = {
     gravity: 10,
     aimSpeed: 0.03,
     speed: 5
-
-
-
-
 }
 
 Player.prototype.aim = function () {
@@ -54,7 +50,6 @@ Player.prototype.aim = function () {
 }
 Player.prototype.clear = function (player) {
     this.ctx.clearRect(0, 0, 800, 450)
-
 }
 Player.prototype.draw = function () {
     this.clear();
@@ -66,6 +61,7 @@ Player.prototype.draw = function () {
     if (this.y + this.height > Game.game.height) {
         this.y = Game.game.height - this.height;
         this.jumping = false;
+     
     }
     for (var i = 0; i < Game.map.length; i++) {
         if (Game.checkCollision(this, Game.map[i])) {
@@ -73,6 +69,7 @@ Player.prototype.draw = function () {
             this.jumping = false;
         }
     }
+  
 
         //this.ctx.fillRect(this.x, this.y, this.width, this.height);
     if (this.faceLeft == true) {

@@ -1,40 +1,25 @@
 ﻿"use strict";
 var Init = function () {
-    var menu = document.getElementById("menu")
+    var clientHelp = new ClientHelp();
+
+    var menu = document.getElementById("menu");
+    var selectMap = document.getElementById('map');
+    var amountUnits = document.getElementById('units');
+    var difficult = document.getElementById('difficult');
+    
     document.getElementById("start").onclick = function () {
         selectMap = selectMap.options[selectMap.selectedIndex].value;
         amountUnits = amountUnits.options[amountUnits.selectedIndex].value;
+        difficult = difficult.options[difficult.selectedIndex].value;
         menu.style.display = "none";
-        Game(selectMap, amountUnits);
+        Game(selectMap, amountUnits, difficult, clientHelp);
     };
-    var selectMap = document.getElementById('map');
-    var amountUnits = document.getElementById('units');
-
-    var mainDiv = document.getElementById("gameDiv");
-    
-    var canvas = document.createElement("canvas");
-    var ctx = canvas.getContext("2d");
-    canvas.width = 800;
-    canvas.height = 450;
-    canvas.setAttribute("id", "canvas");
-    mainDiv.appendChild(canvas);
-
-    var selectedText = selectMap.options[selectMap.selectedIndex].text;
+    clientHelp.setCanvas();
 };
-var Game = function (Map,units) {
-    var menu = document.getElementById("menuContent");
-    menu.style.display = "none";
-    //var aside = document.getElementById('asideContent');
-    //aside.style.display = "none";
-    //aside.style.display = "block";
-    var mainDiv = document.getElementById("gameDiv");
-    var rulesDiv = document.getElementById("rulesDiv");
-    var ctrlDiv = document.getElementById("controlsDiv");
-    mainDiv.style.display = 'block';
-    rulesDiv.style.display = 'block';
-    ctrlDiv.style.display = 'block';
-    console.log(Map);
-    console.log(units);
+var Game = function (Map, units, difficult, clientHelp) {
+
+    clientHelp.setGame();
+
     var game = {
         x: 0,
         y: 0,
@@ -230,7 +215,7 @@ var Game = function (Map,units) {
         }
         if (Game.playerTurn == false) {
             console.log("playerturn == false");
-            enemy.enemyTurn( player);
+            enemy.enemyTurn(player);
             if (Game.checkCollision(Game.projectile, player)) {
                 player.health -= 1;
                 Game.projectile.clear();
@@ -245,6 +230,9 @@ var Game = function (Map,units) {
         for (var i = 0; i < Game.map.length; i++) {
             if (Game.checkCollision(Game.projectile, Game.map[i])) {
                 Game.projectile.clear();
+                Game.map[i] = null;
+                Game.map = staticTexture.getMap();
+                staticTexture.terrain();
                 Game.projectile = null;
                 Game.playerTurn = !Game.playerTurn;
             }
