@@ -27,8 +27,8 @@ var Game = function (Map, units, difficult, clientHelp) {
         width: canvas.width,
         height: canvas.height,
         gunModolus: 0,
-        difficult: 0
-        //map: []
+        difficult: 1
+        
 
     };
     //    Initialize StaticTexture,js to load lvl configuration and weapon settings.
@@ -43,7 +43,10 @@ var Game = function (Map, units, difficult, clientHelp) {
     var enemy = new Enemy(canvas.width, canvas.height);
     var player = new Player(canvas.width, canvas.height);
 
-
+    // difficult 2 = hard.
+    if (difficult == 2) {
+        player.health = 2;
+    }
 
     // Two eventlistner to check keypresses and to delete keypress event. and also declare object.
     var keyPressed = {};
@@ -202,6 +205,16 @@ var Game = function (Map, units, difficult, clientHelp) {
 
     function draw() {
         //setTimeout(function () {
+        if (player.dead) {
+            player = null;
+            alert("Datorn vann, you sux!")
+            clientHelp.setMenu();
+        }
+        else if (enemy.dead) {
+            enemy = null;
+            alert("Du vann, Grattis!!")
+            clientHelp.setMenu();
+        }
         playerAction();
         if (Game.projectile != null) {
             Game.projectile.draw();

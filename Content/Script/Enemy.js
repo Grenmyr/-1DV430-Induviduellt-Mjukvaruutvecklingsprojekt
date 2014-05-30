@@ -28,15 +28,16 @@ var Enemy = function (width, height) {
     this.faceLeft = false;
     this.moveRange = 100;
     this.target = false;
-  
-  
+
+
 };
 Enemy.prototype = {
     width: 40,
     height: 40,
     gravity: 10,
     aimSpeed: 0.05,
-    speed: 5
+    speed: 5,
+    dead: false
 };
 Enemy.prototype.clear = function (player) {
     this.ctx.clearRect(0, 0, 800, 450)
@@ -59,27 +60,30 @@ Enemy.prototype.draw = function () {
         }
     }
     this.clear();
-    //if (this.health >= 0) {
+
     if (this.faceLeft == true) {
         this.ctx.drawImage(this.enemyImage, 0, 196, 114, 98, this.x, this.y, this.width, this.height);
     }
     else {
         this.ctx.drawImage(this.enemyImage, 0, 300, 114, 98, this.x, this.y, this.width, this.height);
     }
-        if (this.health == 4) {
-            this.ctx.drawImage(this.healthImage, 0, 0, 58, 58, this.x - 10, this.y - 25, 40, 40);
-        }
-        if (this.health == 3) {
+    if (this.health == 4) {
+        this.ctx.drawImage(this.healthImage, 0, 0, 58, 58, this.x - 10, this.y - 25, 40, 40);
+    }
+    if (this.health == 3) {
 
-            this.ctx.drawImage(this.healthImage, 0, 0, 58 * (this.health / 4), 58, this.x - 5, this.y - 25, 40 * (this.health / 4), 40);
-        }
-        if (this.health == 2) {
-            this.ctx.drawImage(this.healthImage, 0, 0, 58 * (this.health / 4), 58, this.x, this.y - 25, 40 * (this.health / 4), 40);
-        }
-        if (this.health == 1) {
-            this.ctx.drawImage(this.healthImage, 0, 0, 58 * (this.health / 4), 58, this.x + 5, this.y - 25, 40 * (this.health / 4), 40);
-        }
-    //}
+        this.ctx.drawImage(this.healthImage, 0, 0, 58 * (this.health / 4), 58, this.x - 5, this.y - 25, 40 * (this.health / 4), 40);
+    }
+    if (this.health == 2) {
+        this.ctx.drawImage(this.healthImage, 0, 0, 58 * (this.health / 4), 58, this.x, this.y - 25, 40 * (this.health / 4), 40);
+    }
+    if (this.health == 1) {
+        this.ctx.drawImage(this.healthImage, 0, 0, 58 * (this.health / 4), 58, this.x + 5, this.y - 25, 40 * (this.health / 4), 40);
+    }
+    if (this.health <= 0) {
+        this.dead = true;
+    }
+
 }
 
 Enemy.prototype.enemyTurn = function (player) {

@@ -42,7 +42,8 @@ Player.prototype = {
     height: 40,
     gravity: 10,
     aimSpeed: 0.03,
-    speed: 5
+    speed: 5,
+    dead : false
 }
 
 Player.prototype.aim = function () {
@@ -92,6 +93,9 @@ Player.prototype.draw = function () {
     if (this.health == 1) {
         this.ctx.drawImage(this.healthImage, 0, 0, 58 * (this.health / 4), 58, this.x + 5, this.y - 25, this.width * (this.health / 4), this.height);
     }
+    if (this.health <= 0) {
+        this.dead = true;
+    }
 };
 Player.prototype.animatePlayer = function () {
     if(this.move == true) {
@@ -124,4 +128,7 @@ Player.prototype.animatePlayer = function () {
     else{
         this.ctx.drawImage(this.playerImage, 0, 98, 114, 98, this.x, this.y, this.width, this.height);
     }
+};
+Player.prototype.setDifficult = function () {
+
 };
