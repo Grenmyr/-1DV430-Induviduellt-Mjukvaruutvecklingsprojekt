@@ -65,8 +65,8 @@ Player.prototype.draw = function () {
     }
     for (var i = 0; i < Game.map.length; i++) {
         if (Game.checkCollision(this, Game.map[i])) {
-            this.y += this.vy;
-            this.jumping = false;
+                this.jumping = false;
+                this.y += this.vy;
         }
     }
   
