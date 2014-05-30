@@ -2,10 +2,9 @@
 var Grenade = function (player) {
     var that = this;
 
-    var mainDiv = document.getElementById("main");
     var canvas = document.getElementById("canvas")
     this.ctx = canvas.getContext("2d");
-   
+    
     this.x = player.x;
     this.y = player.y;
     this.vy = Math.sin(player.angle) * 15;
@@ -13,9 +12,14 @@ var Grenade = function (player) {
     this.height = 10;
     this.width = 10;
     this.grenadeGrav = 0.3;
+    this.drawModolus = 0;
+
+    setInterval(function () {
+        that.drawModolus += 1
+    }, 100);
 };
 
-Grenade.prototype.clear = function (player) {
+Grenade.prototype.clear = function () {
     this.ctx.clearRect(this.x - 2, this.y - 2, this.width + 4, this.height + 4)
 };
 Grenade.prototype.checkColl = function (obj1, obj2) {
@@ -44,3 +48,5 @@ Grenade.prototype.draw = function (player) {
     this.ctx.fillRect(this.x -= this.vx, this.y -= this.vy -= this.grenadeGrav, this.width, this.height);
 };
 
+
+ 

@@ -3,20 +3,20 @@ var Init = function () {
     var clientHelp = new ClientHelp();
 
     var menu = document.getElementById("menu");
-    var selectMap = document.getElementById('map');
+    var selectedMap = document.getElementById('map');
     var amountUnits = document.getElementById('units');
     var difficult = document.getElementById('difficult');
-    
+
     document.getElementById("start").onclick = function () {
-        selectMap = selectMap.options[selectMap.selectedIndex].value;
+        selectedMap = selectedMap.options[selectedMap.selectedIndex].value;
         amountUnits = amountUnits.options[amountUnits.selectedIndex].value;
         difficult = difficult.options[difficult.selectedIndex].value;
         menu.style.display = "none";
-        Game(selectMap, amountUnits, difficult, clientHelp);
+        Game(selectedMap, amountUnits, difficult, clientHelp);
     };
     clientHelp.setCanvas();
 };
-var Game = function (Map, units, difficult, clientHelp) {
+var Game = function (selectedMap, units, difficult, clientHelp) {
 
     clientHelp.setGame();
 
@@ -28,11 +28,11 @@ var Game = function (Map, units, difficult, clientHelp) {
         height: canvas.height,
         gunModolus: 0,
         difficult: 1
-        
+
 
     };
     //    Initialize StaticTexture,js to load lvl configuration and weapon settings.
-    var staticTexture = new StaticTexture(canvas.width, canvas.height);
+    var staticTexture = new StaticTexture(canvas.width, canvas.height, selectedMap);
     staticTexture.background();
     staticTexture.terrain();
     staticTexture.weapon(game.gunModolus);
@@ -69,9 +69,9 @@ var Game = function (Map, units, difficult, clientHelp) {
                     player.jumping = true;
                     player.vy = +60;
                 }
-              
+
             }
-          
+
             if (37 in keyPressed) { // Player holding left key.
                 player.x -= player.speed;
                 if (player.faceLeft == false) {
@@ -220,9 +220,7 @@ var Game = function (Map, units, difficult, clientHelp) {
             Game.projectile.draw();
         }
         if (Game.playerTurn == true && Game.projectile != null) {
-            console.log("playerturn == true");
             if (Game.checkCollision(Game.projectile, enemy)) {
-                console.log("Hit enemy");
                 enemy.health -= 1;
                 Game.projectile.clear();
                 Game.projectile = null;
@@ -230,7 +228,6 @@ var Game = function (Map, units, difficult, clientHelp) {
             }
         }
         if (Game.playerTurn == false) {
-            console.log("playerturn == false");
             enemy.enemyTurn(player);
             if (Game.checkCollision(Game.projectile, player)) {
                 player.health -= 1;
@@ -245,34 +242,20 @@ var Game = function (Map, units, difficult, clientHelp) {
         }
         for (var i = 0; i < Game.map.length; i++) {
             if (Game.checkCollision(Game.projectile, Game.map[i])) {
-                Game.projectile.clear();
-                Game.map[i] = null;
-                Game.map = staticTexture.getMap();
-                staticTexture.terrain();
-                Game.projectile = null;
-                Game.playerTurn = !Game.playerTurn;
+                    Game.projectile.clear();
+                    Game.map[i] = null;
+                    staticTexture.terrain();
+                    Game.projectile = null;
+                    Game.playerTurn = !Game.playerTurn;
             }
         }
         player.draw();
-
-
         enemy.draw();
         window.requestAnimationFrame(draw);
         //}, game.interval);
     }
     draw();
 };
-//Game.checkFall = function (obj, game) {
-//    var map = Game.map;
-//    // Forloop checking if player is falling on texture, then gravity is set to 0.
-//    for (var i = 0; i < map.length; i++) {
-//        if ((obj.x < map[i].x + map[i].width && obj.x > map[i].x - map[i].width) &&
-//            (obj.y + obj.gravity >= map[i].y - map[i].height && obj.y + obj.gravity <= map[i].y + map[i].height)) {
-//            obj.y = map[i].y - map[i].height;
-//            obj.jumping = false;
-//        }
-//    }
-//};
 Game.projectile = null;
 Game.playerTurn = true;
 
@@ -284,15 +267,7 @@ Game.checkCollision = function (obj1, obj2) {
     return ((obj1.x + obj1.width > obj2.x && obj1.x < obj2.x + obj2.width) &&
              (obj1.y + obj1.height > obj2.y && obj1.y < obj2.y + obj2.height))
 };
-Game.checkGroundCollision = function (obj1, obj2) {
-    if (obj1 == null || obj2 == null) {
-        return false;
-    }
-    return ((obj1.x + obj1.width > obj2.x && obj1.x < obj2.x + obj2.width) &&
-             (obj1.y < obj2.y + obj2.height))
-};
 
 window.onload = function () {
-    Init();
-    //Game();
+    Init();    
 };

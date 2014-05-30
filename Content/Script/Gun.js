@@ -8,8 +8,6 @@ var Gun = function (shooter) {
     this.vx = Math.cos(shooter.angle) * 5;
     this.height = 5;
     this.width = 5
-   
- 
 }
 
 Gun.prototype.clear = function (shooter) {
