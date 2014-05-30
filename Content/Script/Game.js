@@ -1,57 +1,51 @@
 ﻿"use strict";
 var Init = function () {
-    //var menu = document.getElementById("menu")
-    //document.getElementById("start").onclick = function () {
-    //    menu.style.display = "none";
-    //};
-    var mainDiv = document.getElementById("main");
-    var canvas = document.createElement("canvas")
-    var ctx = canvas.getContext("2d");
-    canvas.width = 800;
-    canvas.height = 450;
-    canvas.setAttribute("id", "canvas")
-    mainDiv.appendChild(canvas);
+    var clientHelp = new ClientHelp();
 
-}
-var Game = function () {
-    var menu = document.getElementById("menu")
-    menu.style.display = "none";
+    var menu = document.getElementById("menu");
+    var selectMap = document.getElementById('map');
+    var amountUnits = document.getElementById('units');
+    var difficult = document.getElementById('difficult');
+    
+    document.getElementById("start").onclick = function () {
+        selectMap = selectMap.options[selectMap.selectedIndex].value;
+        amountUnits = amountUnits.options[amountUnits.selectedIndex].value;
+        difficult = difficult.options[difficult.selectedIndex].value;
+        menu.style.display = "none";
+        Game(selectMap, amountUnits, difficult, clientHelp);
+    };
+    clientHelp.setCanvas();
+};
+var Game = function (Map, units, difficult, clientHelp) {
+
+    clientHelp.setGame();
 
     var game = {
         x: 0,
         y: 0,
         interval: 10,
-        width: 800,
-        height: 450,
+        width: canvas.width,
+        height: canvas.height,
         gunModolus: 0,
-        map: [],
+        difficult: 0
+        //map: []
 
-    }
-    var staticTexture = new StaticTexture(800, 450)
+    };
+    //    Initialize StaticTexture,js to load lvl configuration and weapon settings.
+    var staticTexture = new StaticTexture(canvas.width, canvas.height);
     staticTexture.background();
     staticTexture.terrain();
     staticTexture.weapon(game.gunModolus);
-
-    var enemy = new Enemy(800, 450);
-    var player = new Player(800, 450);
-
-    // My aim to player, perhaps integrate with player objekt in sp5?.
-    //var weapon = {
-    //    firearm: 0,
-    //    angle: 90,
-    //    speed: 0.05,
-    //}
-
-    // Array to creat new bullets or grenades or whatever is fired.
-    //var projectile = null;
-
-    // Loading current map array for collision check.
-
     Game.map = staticTexture.getMap();
-    game.map = Game.map;
     Game.game = game;
 
-    // Two evenlistner to check keypresses and to delete keypress event. and also declare object.
+    // Initializing player and Enemy, later this is done repeadedly for loading serveral units.
+    var enemy = new Enemy(canvas.width, canvas.height);
+    var player = new Player(canvas.width, canvas.height);
+
+
+
+    // Two eventlistner to check keypresses and to delete keypress event. and also declare object.
     var keyPressed = {};
     addEventListener("keydown", function (e) {
         keyPressed[e.keyCode] = true;
@@ -61,58 +55,86 @@ var Game = function () {
         delete keyPressed[e.keyCode];
     }, false);
 
-
+    // Function to handle all keypress events.
     function playerAction() {
+        player.move = false;
         if (Game.playerTurn == true && player.fired == false) {
             // CONTROLS FOR MOVEMENT
             if (38 in keyPressed) { // Player jumping on Up key
                 if (!player.jumping) {
                     player.jumping = true;
-                    player.vy = +50;
+                    player.vy = +60;
                 }
             }
-
             if (37 in keyPressed) { // Player holding left key.
                 player.x -= player.speed;
-                for (var i = 0; i < game.map.length; i++) {
-                    if (Game.checkCollision(player, game.map[i])) {
-                        player.x += player.speed
-                        player.faceRight = true;
+                if (player.faceLeft == false) {
+                    player.angle = -player.angle + Math.PI;
+                    player.angle %= Math.PI
+                    console.log(player.angle);
+                }
+                player.faceLeft = true;
+                player.move = true;
+                for (var i = 0; i < Game.map.length; i++) {
+                    if (Game.checkCollision(player, Game.map[i])) {
+                        player.x += player.speed;
                         break;
                     }
                 }
-                if (player.x  <= 0 ) {
+                if (player.x <= 0) {
                     player.x = 0;
-                    player.faceRight = false;
                 }
             }
-
             if (39 in keyPressed) { // Player holding right key.
-
                 player.x += player.speed;
-                for (var i = 0; i < game.map.length; i++) {
+                if (player.faceLeft == true) {
+                    player.angle %= Math.PI
+                    player.angle = -player.angle - Math.PI;
+                }
+                player.faceLeft = false;
+                player.move = true;
+                for (var i = 0; i < Game.map.length; i++) {
 
-                    if (Game.checkCollision(player, game.map[i])) {
-                        player.x -= player.speed
-                        console.log("tjohej")
-                        player.faceRight = true;
+                    if (Game.checkCollision(player, Game.map[i])) {
+                        player.x -= player.speed;
                         break;
                     }
                 }
                 if (player.x + player.width >= game.width) {
                     player.x = game.width - player.width;
-                    player.faceRight = true;
-                
                 }
-            }
 
+            }
             // CONTROLS FOR AIM 
             if (87 in keyPressed) { // Player aiming up on W key.
-                player.angle += player.aimSpeed;
+                if (player.faceLeft == true) {
+                    player.angle += player.aimSpeed;
+                    if (player.angle > Math.PI / 2) {
+                        player.angle = Math.PI / 2;
+                    }
+                }
+                else {
+                    player.angle -= player.aimSpeed;
+                    if (player.angle < -Math.PI * 1.5) {
+                        player.angle = -Math.PI * 1.5;
+                    }
+                }
+
             }
             if (83 in keyPressed) { // Player aiming down on S key.
-                //weapon.angle -= weapon.speed;
-                player.angle -= player.aimSpeed;
+                if (player.faceLeft == true) {
+                    player.angle -= player.aimSpeed;
+                    if (player.angle < -Math.PI / 2) {
+                        player.angle = -Math.PI / 2;
+                    }
+                }
+                else {
+                    console.log(player.angle);
+                    player.angle += player.aimSpeed;
+                    if (player.angle > -Math.PI / 2) {
+                        player.angle = -Math.PI / 2;
+                    }
+                }
             }
 
             // CONTROLS FOR SWAP WEAPON AND FIRE
@@ -141,6 +163,9 @@ var Game = function () {
                     Game.projectile = new Grenade(player);
                 }
                 player.fired = true;
+                enemy.moveRange = Math.floor((Math.random() * 200) + 100);
+                enemy.speed = 5;
+                enemy.target = false;
             }
         }
     }
@@ -158,7 +183,6 @@ var Game = function () {
 
         if (!window.requestAnimationFrame)
             window.requestAnimationFrame = function (callback, element) {
-                alert();
                 var currTime = new Date().getTime();
                 var timeToCall = Math.max(0, 16 - (currTime - lastTime));
                 var id = window.setTimeout(function () { callback(currTime + timeToCall); },
@@ -176,30 +200,23 @@ var Game = function () {
     function draw() {
         //setTimeout(function () {
         playerAction();
-
-
         if (Game.projectile != null) {
             Game.projectile.draw();
         }
-
-        //if (Game.projectile != null) {
         if (Game.playerTurn == true && Game.projectile != null) {
-            console.log("playerturn == true")
+            console.log("playerturn == true");
             if (Game.checkCollision(Game.projectile, enemy)) {
-                console.log("Hit enemy")
+                console.log("Hit enemy");
                 enemy.health -= 1;
                 Game.projectile.clear();
                 Game.projectile = null;
                 Game.playerTurn = false;
             }
         }
-
-
         if (Game.playerTurn == false) {
             console.log("playerturn == false");
-            Game.enemyTurn(enemy, player);
+            enemy.enemyTurn(player);
             if (Game.checkCollision(Game.projectile, player)) {
-                console.log("Hit player")
                 player.health -= 1;
                 Game.projectile.clear();
                 Game.projectile = null;
@@ -207,84 +224,52 @@ var Game = function () {
             }
         }
         if (Game.projectile != null && !Game.checkCollision(Game.projectile, game) && player.firearm == 0) {
-            console.log("utanfor banan")
-            //Game.projectile.clear();
             Game.projectile = null;
             Game.playerTurn = !Game.playerTurn;
-
         }
-        //if (Game.projectile != null &&  Game.checkCollision(Game.projectile, game) && player.firearm == 1) {
-           
-            
-        //    //Game.projectile.y = 400;
-        //   console.log("inne i granat")
-        //    //Game.projectile.vy = 0;
-        //    //Game.projectile.vx = 0;
-        //    var granade = Game.projectile;
-        //    setTimeout(function () {
-        //        granade.clear();
-        //    }, 1000);
-        //    //Game.projectile.clear();
-        //    Game.projectile = null;
-        //    Game.playerTurn = !Game.playerTurn;
-        //}
-
-
-        for (var i = 0; i < game.map.length; i++) {
-            if (Game.checkCollision(Game.projectile, game.map[i])) {
+        for (var i = 0; i < Game.map.length; i++) {
+            if (Game.checkCollision(Game.projectile, Game.map[i])) {
                 Game.projectile.clear();
+                Game.map[i] = null;
+                Game.map = staticTexture.getMap();
+                staticTexture.terrain();
                 Game.projectile = null;
                 Game.playerTurn = !Game.playerTurn;
-                console.log(Game.playerTurn);
             }
         }
-        //}
-        player.draw()
+        player.draw();
+
+
         enemy.draw();
         window.requestAnimationFrame(draw);
         //}, game.interval);
     }
     draw();
-}
-Game.checkFall = function (obj, game) {
-    var map = game.map;
-    // Forloop checking if player is falling on texture, then gravity is set to 0.
-    for (var i = 0; i < map.length; i++) {
-        if ((obj.x < map[i].x + map[i].width && obj.x > map[i].x - map[i].width) &&
-            (obj.y + obj.gravity >= map[i].y - map[i].height && obj.y + obj.gravity <= map[i].y + map[i].height)) {
-            obj.y = map[i].y - map[i].height;
-            obj.jumping = false;
-        }
-    }
-}
+};
+//Game.checkFall = function (obj, game) {
+//    var map = Game.map;
+//    // Forloop checking if player is falling on texture, then gravity is set to 0.
+//    for (var i = 0; i < map.length; i++) {
+//        if ((obj.x < map[i].x + map[i].width && obj.x > map[i].x - map[i].width) &&
+//            (obj.y + obj.gravity >= map[i].y - map[i].height && obj.y + obj.gravity <= map[i].y + map[i].height)) {
+//            obj.y = map[i].y - map[i].height;
+//            obj.jumping = false;
+//        }
+//    }
+//};
 Game.projectile = null;
 Game.playerTurn = true;
 
-
+// Checkcollision function, handling all collisions in game, except 1 for grenade that i want dirrefent formula.
 Game.checkCollision = function (obj1, obj2) {
     if (obj1 == null || obj2 == null) {
         return false;
     }
-    return ((obj1.x +obj1.width > obj2.x && obj1.x < obj2.x+obj2.width) &&
-             (obj1.y + obj1.height > obj2.y  && obj1.y < obj2.y+obj2.height))
-}
-
-Game.enemyTurn = function (enemy, player) {
-    player.fired = false;
-    Game.enemyAim(enemy, player);
-    setTimeout(function () {
-        if (Game.projectile == null && !Game.playerTurn) {
-            Game.projectile = new Gun(enemy);
-        }
-    }, 3000);
-}
-Game.enemyAim = function (enemy, player) {
-
-    enemy.angle = Math.atan2(enemy.y - player.y, enemy.x - player.x);
-
-}
+    return ((obj1.x + obj1.width > obj2.x && obj1.x < obj2.x + obj2.width) &&
+             (obj1.y + obj1.height > obj2.y && obj1.y < obj2.y + obj2.height))
+};
 
 window.onload = function () {
     Init();
-    Game();
+    //Game();
 };

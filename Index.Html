@@ -6,52 +6,108 @@
 
 
 
-    <link rel="stylesheet" href="Content/style/Texture.css">
+    <link rel="stylesheet" href="Content/style/style.css">
 </head>
 
 <body>
+    <header>
+        <h1>Rabbid Wars</h1>
+    </header>
+    <main id="menuContent">
+    
+         
+    <div id="leftDiv">
+    </div>
+     
     <div id="menu">
+        <div class="pusher"></div>
         <div class="drop-menu">
             <span class="plus">+</span>Number of Rabbits 
-       
-        <ul class="sub-menu">
-            <li>
-                <form action="Stage">
-                    <select name="stage">
+         <select id="units">
                         <option value="1">1 Rabbit</option>
                         <option value="2">2 Rabbits</option>
                         <option value="3">3 Rabbits</option>
                     </select>
-                </form>
-            </li>
-        </ul>
         </div>
 
         <div class="drop-menu">
             <span class="plus">+</span>Stage
-        <ul class="sub-menu">
-            <li>
-                <form action="Stage">
-                    <select name="stage">
+     
+                    <select id="map">
                         <option value="1">Stage 1</option>
                         <option value="2">Stage 2</option>
                         <option value="3">Stage 3</option>
                         <option value="4">Stage 4</option>
                     </select>
-                </form>
-            </li>
-        </ul>
         </div>
-        <div class="drop-menu">
+          <div class="drop-menu">
+            <span class="plus">+</span>Difficulty
+         <select id="difficult">
+                        <option value="1">Normal</option>
+                        <option value="2">Hard</option>   
+                    </select>
+        </div>
+     <!--   <div class="drop-menu">-->
+        <div class="pusher"></div>
             <a id="start">
-                <img src="content/Image/start.png" alt="Start button" border="0" width="25">
-                Starta spelet
+             <!--  <span class="plus">+</span>Starta spelet-->
+                  <img src="content/Image/startButton.png" alt="Start button" border="0" width="150">
             </a>
+   <!--     </div>-->
+    
+    </div>
+    <div id="rightDiv">
+    </div>
+ 
+        </main>
+
+
+    <!-- <aside id ="asideContent">-->
+
+    <div id="rulesDiv">
+        <div class="span">
+            <div class="drop-menu"id="homeLink">
+                <span class="plus">+</span>Home
+                 <a>
+                  <img src="content/Image/home.png" alt="Return button" border="0" width="30">
+            </a>
+            </div>
+            <div class="drop-menu" id="controlLink">
+                <span class="plus">+</span>Controls
+                      <a>
+                 <img src="content/Image/control.png" alt="controls button"  border="0" width="30">
+                          </a>
+            </div>
+            <div class="drop-menu">
+                <span class="plus">+</span>Sound
+            </div>
+            <h3>Rules</h3>
+
+            <h4>Turn based game:</h4>
+            <p>Player get unlimited time to move, swap weapons, jump or aim.</p>
+            <p>But after player fired, the turn is used up and it is computers turn to do action.</p>
+            <h4>Hitting enemy</h4>
+            <p>There is two different weapons a gun and sticky carrot.</p>
+            <p>If player or computer hit target, the target loose health, when completly out of health the unit dies.</p>
+            <h4>Goal of game</h4>
+            <p>Player and computer continue to swap turns until either side is dead.</p>
+            <p>Winner is the one with any units left, after winning a map, player open up next map.</p>
         </div>
     </div>
-    <div id="main">
+
+
+    <!--    </aside>-->
+    <div id="gameDiv">
     </div>
-   <!-- <script src="Content/Script/Texture.js"></script>-->
+
+    <div id="controlsDiv">
+        <img src="content/Image/keyMap.png" alt="Start button" border="0" width="800">
+    </div>
+
+
+    <!-- <script src="Content/Script/Texture.js"></script>-->
+    <script src="Content/Script/Animate.js.js"></script>
+    <script src="Content/Script/ClientHelp.js"></script>
     <script src="Content/Script/StaticTexture.js"></script>
     <script src="Content/Script/Enemy.js"></script>
     <script src="Content/Script/Gun.js"></script>
