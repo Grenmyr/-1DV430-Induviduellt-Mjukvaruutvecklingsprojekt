@@ -1,7 +1,8 @@
 ﻿"use strict";
 var StaticTexture = function (width, height, selectedMap) {
     var that = this;
-    this.map = selectedMap;
+    this.selectedMap = selectedMap;
+    var map = [];
     var mainDiv = document.getElementById("gameDiv");
     var staticCanvas = document.createElement("canvas");
     var ctxTerrain = staticCanvas.getContext("2d");
@@ -28,6 +29,7 @@ var StaticTexture = function (width, height, selectedMap) {
     this.backgroundImage = new Image();
     var weaponImage = new Image();
     var terrain = new Image();
+   
 
     this.background = function () {
         this.backgroundImage.src = "Content/Image/background1.png";
@@ -49,10 +51,11 @@ var StaticTexture = function (width, height, selectedMap) {
             ctxweapon.drawImage(weaponImage, 700, 0, 80, 80);
         };
     };
-    this.terrain = function () {
+    this.terrain = function (x, y) {
         terrain.src = "Content/Image/rabbit.png";
-        ctxTerrain.clearRect(0, 0, width, height);
+        
         terrain.onload = function () {
+            ctxTerrain.clearRect(x - 22, y - 22, width, height);
             for (var i = 0; i < map.length; i++) {
                 if (map[i] != null) {
                     ctxTerrain.drawImage(terrain, map[i].SpriteposX, map[i].SpritePosy, map[i].xLength, map[i].Yheight, map[i].x, map[i].y, 20, 20);
@@ -62,11 +65,12 @@ var StaticTexture = function (width, height, selectedMap) {
     }
     // Function to return my map.
     this.getMap = function () {
-        if (this.map == 1) {
+
+        if (this.selectedMap == 1) {
             var map = Map1();
             return map;
         }
-        else if (this.map == 2) {
+        else if (this.selectedMap == 2) {
             var map = Map2();
             return map;
         }
@@ -210,6 +214,7 @@ var StaticTexture = function (width, height, selectedMap) {
             { SpriteposX: 350, SpritePosy: 0, xLength: 50, Yheight: 50, x: 360, y: 380, width: 20, height: 20 }
 
         ];
+        
     }
 
     function Map2() {
@@ -227,7 +232,6 @@ var StaticTexture = function (width, height, selectedMap) {
         { SpriteposX: 350, SpritePosy: 0, xLength: 50, Yheight: 50, x: 40, y: 210, width: 20, height: 20 },
         { SpriteposX: 400, SpritePosy: 0, xLength: 50, Yheight: 50, x: 60, y: 210, width: 20, height: 20 },
         { SpriteposX: 350, SpritePosy: 0, xLength: 50, Yheight: 50, x: 80, y: 210, width: 20, height: 20 },
-        { SpriteposX: 400, SpritePosy: 0, xLength: 50, Yheight: 50, x: 80, y: 210, width: 20, height: 20 },
         { SpriteposX: 450, SpritePosy: 0, xLength: 50, Yheight: 50, x: 100, y: 210, width: 20, height: 20 },
         { SpriteposX: 400, SpritePosy: 0, xLength: 50, Yheight: 50, x: 120, y: 210, width: 20, height: 20 },
 
@@ -268,10 +272,7 @@ var StaticTexture = function (width, height, selectedMap) {
         { SpriteposX: 400, SpritePosy: 0, xLength: 50, Yheight: 50, x: 800, y: 210, width: 20, height: 20 },
 
         // Long Y line
-        { SpriteposX: 350, SpritePosy: 0, xLength: 50, Yheight: 50, x: 170, y: 210, width: 20, height: 20 },
-        { SpriteposX: 400, SpritePosy: 0, xLength: 50, Yheight: 50, x: 190, y: 210, width: 20, height: 20 },
-        { SpriteposX: 350, SpritePosy: 0, xLength: 50, Yheight: 50, x: 210, y: 210, width: 20, height: 20 },
-        { SpriteposX: 350, SpritePosy: 0, xLength: 50, Yheight: 50, x: 230, y: 210, width: 20, height: 20 },
+
         { SpriteposX: 400, SpritePosy: 0, xLength: 50, Yheight: 50, x: 230, y: 230, width: 20, height: 20 },
         { SpriteposX: 350, SpritePosy: 0, xLength: 50, Yheight: 50, x: 230, y: 250, width: 20, height: 20 },
         { SpriteposX: 350, SpritePosy: 0, xLength: 50, Yheight: 50, x: 230, y: 270, width: 20, height: 20 },
@@ -329,7 +330,6 @@ var StaticTexture = function (width, height, selectedMap) {
 
         { SpriteposX: 350, SpritePosy: 0, xLength: 50, Yheight: 50, x: 580, y: 280, width: 20, height: 20 },
         { SpriteposX: 350, SpritePosy: 0, xLength: 50, Yheight: 50, x: 360, y: 380, width: 20, height: 20 }
-
     ];
     }
 

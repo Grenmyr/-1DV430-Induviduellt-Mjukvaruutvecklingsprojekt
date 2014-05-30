@@ -121,15 +121,4 @@ Player.prototype.animatePlayer = function () {
         this.ctx.drawImage(this.playerImage, 0, 98, 114, 98, this.x, this.y, this.width, this.height);
     }
 };
-Player.prototype.explode = function () {
-    this.clear();
-    this.drawModolus = 4;
-  
-    if (this.drawModolus == 4) {
-        console.log(this.drawModolus)
-        this.ctx.drawImage(this.playerImage, 0, 0, 114, 98, this.x, this.y, this.width, this.height);
-    }
-    if (this.drawModolus % 4 == 1) {
-        this.ctx.drawImage(this.playerImage, 114, 0, 114, 98, this.x, this.y, this.width, this.height);
-    }
-};
+

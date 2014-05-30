@@ -243,8 +243,8 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
         for (var i = 0; i < Game.map.length; i++) {
             if (Game.checkCollision(Game.projectile, Game.map[i])) {
                     Game.projectile.clear();
+                    staticTexture.terrain(Game.map[i].x, Game.map[i].y);
                     Game.map[i] = null;
-                    staticTexture.terrain();
                     Game.projectile = null;
                     Game.playerTurn = !Game.playerTurn;
             }
