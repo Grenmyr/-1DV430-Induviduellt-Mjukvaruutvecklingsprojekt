@@ -1,22 +1,27 @@
 ﻿"use strict";
+/**
+ *
+ * @constructor Handle ugly Html and CSS help for game and menu depending what state it is in.
+ */
 var ClientHelp = function () {
     var that = this;
-    
 
     // Div for menu
     this.menuContent = document.getElementById("menuContent");
     this.menu = document.getElementById("menu");
 
-    // Divs for gameview.
+    // Divs for game view.
     this.mainDiv = document.getElementById("gameDiv");
     this.rulesDiv = document.getElementById("rulesDiv");
     this.ctrlDiv = document.getElementById("controlsDiv");
 
+    // Event listener for home button.
     document.getElementById("homeLink").onclick = function () {
         that.setMenu();
     };
     var homeCount = 1;
 
+    // Event listener for toggling key map on and off.
     document.getElementById("controlLink").onclick = function () {
         console.log(homeCount)
         homeCount += 1;
@@ -46,6 +51,7 @@ ClientHelp.prototype.setCanvas = function () {
     canvas.setAttribute("id", "canvas");
     mainDiv.appendChild(canvas);
 }
+// Reload game function
 ClientHelp.prototype.setMenu = function () {
     location.reload();
 }

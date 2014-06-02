@@ -1,4 +1,11 @@
 ﻿"use strict";
+/**
+ *
+ * @param width Canvas width
+ * @param height Canvas height
+ * @param selectedMap What map user selected from menu
+ * @constructor Containts Dom structure to help navigate user between Menu and Game.
+ */
 var StaticTexture = function (width, height, selectedMap) {
     var that = this;
     this.selectedMap = selectedMap;
@@ -12,6 +19,7 @@ var StaticTexture = function (width, height, selectedMap) {
 
     mainDiv.appendChild(staticCanvas);
 
+    // Canvas to draw different backgrounds on.
     var backgroundCanvas = document.createElement("canvas");
     var ctxbackground = backgroundCanvas.getContext("2d");
     backgroundCanvas.width = width;
@@ -19,6 +27,7 @@ var StaticTexture = function (width, height, selectedMap) {
     backgroundCanvas.setAttribute("id", "backgroundCanvas");
     mainDiv.appendChild(backgroundCanvas);
 
+    // Canvas to display what weapon user are wielding.
     var weapon = document.createElement("canvas");
     var ctxweapon = backgroundCanvas.getContext("2d");
     backgroundCanvas.width = width;
@@ -37,7 +46,7 @@ var StaticTexture = function (width, height, selectedMap) {
             ctxbackground.drawImage(that.backgroundImage, 0, 0);
         };
     };
-
+    // Function to handle weapon swapping, swap src on image depening on what weapon user have.
     this.weapon = function (type) {
         ctxweapon.clearRect(0, 0, width, height);
         ctxbackground.drawImage(this.backgroundImage, 0, 0);
@@ -51,6 +60,7 @@ var StaticTexture = function (width, height, selectedMap) {
             ctxweapon.drawImage(weaponImage, 700, 0, 80, 80);
         };
     };
+    // Function to reload terrain with.
     this.terrain = function (x, y) {
         terrain.src = "Content/Image/rabbit.png";
         
@@ -62,7 +72,7 @@ var StaticTexture = function (width, height, selectedMap) {
                 }
             }
         }
-    }
+    };
     // Function to return my map.
     this.getMap = function () {
 
@@ -77,7 +87,7 @@ var StaticTexture = function (width, height, selectedMap) {
 
     }
 
-    // Map, atm it is only 1 map, if more made, break out into another class.
+    // Map1 returns array with map1
     function Map1() {
         return map = [
 
@@ -216,7 +226,7 @@ var StaticTexture = function (width, height, selectedMap) {
         ];
         
     }
-
+    // Map2 returns array with map2
     function Map2() {
         that.backgroundImage.src = "Content/Image/background2.png" ;
         that.backgroundImage.onload = function () {

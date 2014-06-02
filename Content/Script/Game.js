@@ -16,14 +16,23 @@ var Init = function () {
     };
     clientHelp.setCanvas();
 };
+/**
+ *
+ * @param selectedMap A number, of what selected value from Map in menu.
+ * @param units A number, of what selected value from units in menu.
+ * @param difficult  A number, of what selected value from difficulty in menu.
+ * @param clientHelp object, referense to be used in Game.
+ * @constructor Game function, it handle all keypress event, Its the core and all other JS files are initialized from it.
+ * It also contains my draw function that render games update on canvas.
+ */
 var Game = function (selectedMap, units, difficult, clientHelp) {
 
     clientHelp.setGame();
 
+
     var game = {
         x: 0,
         y: 0,
-        interval: 10,
         width: canvas.width,
         height: canvas.height,
         gunModolus: 0,
@@ -31,7 +40,12 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
 
 
     };
-    //    Initialize StaticTexture,js to load lvl configuration and weapon settings.
+
+    /**
+     *
+     * @type {StaticTexture}  Initialize StaticTexture,js to load canvas settings and What Gun that is selected.
+     * Also used as reference to load what map that was selected in menu.
+     */
     var staticTexture = new StaticTexture(canvas.width, canvas.height, selectedMap);
     staticTexture.background();
     staticTexture.terrain();
@@ -39,7 +53,7 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
     Game.map = staticTexture.getMap();
     Game.game = game;
 
-    // Initializing player and Enemy, later this is done repeadedly for loading serveral units.
+    // Initializing player and Enemy, later this is done will be done for loading mutiple units.
     var enemy = new Enemy(canvas.width, canvas.height);
     var player = new Player(canvas.width, canvas.height);
 
@@ -69,15 +83,12 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
                     player.jumping = true;
                     player.vy = +60;
                 }
-
             }
-
             if (37 in keyPressed) { // Player holding left key.
                 player.x -= player.speed;
                 if (player.faceLeft == false) {
                     player.angle = -player.angle + Math.PI;
                     player.angle %= Math.PI
-                    console.log(player.angle);
                 }
                 player.faceLeft = true;
                 player.move = true;
@@ -100,7 +111,6 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
                 player.faceLeft = false;
                 player.move = true;
                 for (var i = 0; i < Game.map.length; i++) {
-
                     if (Game.checkCollision(player, Game.map[i])) {
                         player.x -= player.speed;
                         break;
@@ -109,7 +119,6 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
                 if (player.x + player.width >= game.width) {
                     player.x = game.width - player.width;
                 }
-
             }
             // CONTROLS FOR AIM 
             if (87 in keyPressed) { // Player aiming up on W key.
@@ -125,7 +134,6 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
                         player.angle = -Math.PI * 1.5;
                     }
                 }
-
             }
             if (83 in keyPressed) { // Player aiming down on S key.
                 if (player.faceLeft == true) {
@@ -135,7 +143,6 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
                     }
                 }
                 else {
-                    console.log(player.angle);
                     player.angle += player.aimSpeed;
                     if (player.angle > -Math.PI / 2) {
                         player.angle = -Math.PI / 2;
@@ -202,20 +209,24 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
                 clearTimeout(id);
             };
     }());
-
+    /**
+     * Draw function It update my game canvas with content happening in game. It contains alot if statements to handle
+     * If projectile if fired and if it is Ai (Enemy) or players turn.
+     */
     function draw() {
-        //setTimeout(function () {
+        // Load menu after player or AI wins.
         if (player.dead) {
-            player = null;
-            alert("Datorn vann, you sux!")
+            alert("Datorn vann, du suger!")
             clientHelp.setMenu();
         }
         else if (enemy.dead) {
-            enemy = null;
             alert("Du vann, Grattis!!")
             clientHelp.setMenu();
         }
+        // check for player commands
         playerAction();
+
+        // Multiple IF to check if it is players turn or Enemy, also if Projectile exist or not.
         if (Game.projectile != null) {
             Game.projectile.draw();
         }
@@ -252,14 +263,14 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
         player.draw();
         enemy.draw();
         window.requestAnimationFrame(draw);
-        //}, game.interval);
     }
     draw();
 };
+// Global variables
 Game.projectile = null;
 Game.playerTurn = true;
 
-// Checkcollision function, handling all collisions in game, except 1 for grenade that i want dirrefent formula.
+// Global function, handling all collisions in game, except 1 for grenade that i want dirrefent algoritm.
 Game.checkCollision = function (obj1, obj2) {
     if (obj1 == null || obj2 == null) {
         return false;
