@@ -1,10 +1,11 @@
 ﻿"use strict";
+/**
+ *
+ * @param width Canvas height
+ * @param height Canvas height
+ * @constructor Contains all properties and AI for my Enemy.
+ */
 var Enemy = function (width, height) {
-    //var mainDiv = document.getElementById("main");
-    // //var canvas = document.createElement("canvas")
-    //var canvas = document.getElementById("canvas")
-    //this.ctx = canvas.getContext("2d");
-
     var mainDiv = document.getElementById("gameDiv");
     var canvas = document.createElement("canvas")
     this.ctx = canvas.getContext("2d");
@@ -20,7 +21,6 @@ var Enemy = function (width, height) {
 
     this.health = 4;
     this.x = Math.floor((Math.random() * 600) + 1);
-    //this.x = 500
     this.y = 300;
     this.angle = 90;
     this.fire = false;
@@ -28,20 +28,26 @@ var Enemy = function (width, height) {
     this.faceLeft = false;
     this.moveRange = 100;
     this.target = false;
-  
-  
+
+
 };
 Enemy.prototype = {
     width: 40,
     height: 40,
     gravity: 10,
     aimSpeed: 0.05,
-    speed: 5
+    speed: 5,
+    dead: false
 };
+/**
+ *
+ * @param player clear function clear playerobject from canvas
+ */
 Enemy.prototype.clear = function (player) {
     this.ctx.clearRect(0, 0, 800, 450)
 
 };
+// Function to draw enemy image from sprite. Also draw health bar
 Enemy.prototype.draw = function () {
     if (this.vy > -5) {
         this.vy -= this.gravity;
@@ -59,29 +65,37 @@ Enemy.prototype.draw = function () {
         }
     }
     this.clear();
-    //if (this.health >= 0) {
+
     if (this.faceLeft == true) {
         this.ctx.drawImage(this.enemyImage, 0, 196, 114, 98, this.x, this.y, this.width, this.height);
     }
     else {
         this.ctx.drawImage(this.enemyImage, 0, 300, 114, 98, this.x, this.y, this.width, this.height);
     }
-        if (this.health == 4) {
-            this.ctx.drawImage(this.healthImage, 0, 0, 58, 58, this.x - 10, this.y - 25, 40, 40);
-        }
-        if (this.health == 3) {
+    if (this.health == 4) {
+        this.ctx.drawImage(this.healthImage, 0, 0, 58, 58, this.x - 10, this.y - 25, 40, 40);
+    }
+    if (this.health == 3) {
 
-            this.ctx.drawImage(this.healthImage, 0, 0, 58 * (this.health / 4), 58, this.x - 5, this.y - 25, 40 * (this.health / 4), 40);
-        }
-        if (this.health == 2) {
-            this.ctx.drawImage(this.healthImage, 0, 0, 58 * (this.health / 4), 58, this.x, this.y - 25, 40 * (this.health / 4), 40);
-        }
-        if (this.health == 1) {
-            this.ctx.drawImage(this.healthImage, 0, 0, 58 * (this.health / 4), 58, this.x + 5, this.y - 25, 40 * (this.health / 4), 40);
-        }
-    //}
+        this.ctx.drawImage(this.healthImage, 0, 0, 58 * (this.health / 4), 58, this.x - 5, this.y - 25, 40 * (this.health / 4), 40);
+    }
+    if (this.health == 2) {
+        this.ctx.drawImage(this.healthImage, 0, 0, 58 * (this.health / 4), 58, this.x, this.y - 25, 40 * (this.health / 4), 40);
+    }
+    if (this.health == 1) {
+        this.ctx.drawImage(this.healthImage, 0, 0, 58 * (this.health / 4), 58, this.x + 5, this.y - 25, 40 * (this.health / 4), 40);
+    }
+    if (this.health <= 0) {
+        this.dead = true;
+    }
+
 }
-
+/**
+ * Function to handle Enemy AI.
+ * Most important functions is the temprojectile Ai use to calculate if he can hit Player. If not he tries to move.
+ * Ai can only travel 100 pixels in moverange. Then he fires toward player. Ai always hit if he does't hit texture.
+ * @param player I need to know where player is so i send it to my enemy AI
+ */
 Enemy.prototype.enemyTurn = function (player) {
     player.fired = false;
 
@@ -113,8 +127,10 @@ Enemy.prototype.enemyTurn = function (player) {
             this.faceLeft = false;
         }
 
-        if (this.moveRange >= 0) {
-            this.x += this.speed;
+        if (this.moveRange >= 0 ) {
+            if (this.x > 0 || this.x < Game.game.width){
+                this.x += this.speed;
+            }
             this.moveRange -= 10;
             for (var i = 0; i < Game.map.length; i++) {
                 if (Game.checkCollision(this, Game.map[i])) {
@@ -126,12 +142,14 @@ Enemy.prototype.enemyTurn = function (player) {
     }
     this.enemyAim(player);
     var that = this;
+    // Timeout to give impression Ai is thinking.
     setTimeout(function () {
         if (Game.projectile == null && !Game.playerTurn) {
             Game.projectile = new Gun(that);
         }
     }, 1000);
 };
+// Algoritm so AI know where to aim when he fire projectile.
 Enemy.prototype.enemyAim = function (player) {
     this.angle = Math.atan2(this.y - player.y, this.x - player.x);
 };
