@@ -147,7 +147,7 @@ Enemy.prototype.enemyTurn = function (player) {
         if (Game.projectile == null && !Game.playerTurn) {
             Game.projectile = new Gun(that);
         }
-    }, 1000);
+    }, 2000);
 };
 // Algoritm so AI know where to aim when he fire projectile.
 Enemy.prototype.enemyAim = function (player) {
