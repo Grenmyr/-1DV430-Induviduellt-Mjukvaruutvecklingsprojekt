@@ -43,6 +43,7 @@ header {
 
 
 
+
 /*CSS for Canvas and Game*/
 
 canvas {
@@ -70,7 +71,7 @@ canvas {
 }
 
 .weapon {
-    z-index: 3;
+    z-index: 4;
 }
 
 #gameDiv {
@@ -83,7 +84,7 @@ canvas {
 /*CSS for mainpage, menu, leftdiv and rightdiv on page.*/
 h1 {
     text-align: center;
-    font-size: 2.5em;
+    font-size: 5.2em;
 }
 
 #menu {
@@ -152,6 +153,9 @@ h1 {
     }
         #rulesDiv a {
         float:right;
+    }
+                #rulesDiv h3  {
+       margin-top:5%;
     }
 
 /* Some Credit to http://www.webstuffshare.com/2010/06/simple-css3-dropdown-menu/, i got some inspiration from them. */

@@ -9,6 +9,7 @@ var ClientHelp = function () {
     // Div for menu
     this.menuContent = document.getElementById("menuContent");
     this.menu = document.getElementById("menu");
+
   
     // Divs for game view.
     this.mainDiv = document.getElementById("gameDiv");
@@ -36,7 +37,6 @@ var ClientHelp = function () {
 }
 // function to load adjust to Game CSS/Html structure.
 ClientHelp.prototype.setGame = function () {
-    
     this.menuContent.style.display = "none";
     this.mainDiv.style.display = 'block';
     this.rulesDiv.style.display = 'block';
