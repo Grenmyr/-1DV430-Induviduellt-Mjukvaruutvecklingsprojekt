@@ -23,8 +23,8 @@ var Player = function (width, height) {
     this.healthImage.src = "Content/Image/healthbar.png";
 
     this.jumping = false;
-    this.x = 225;
-    this.y = 200;
+    this.x = 300;
+    this.y = 500;
     this.angle = 0;
     this.firearm = 0;
     this.health = 4;
@@ -43,7 +43,7 @@ var Player = function (width, height) {
 Player.prototype = {
     width: 40,
     height: 40,
-    gravity: 10,
+    gravity: 5,
     aimSpeed: 0.03,
     speed: 5,
     dead : false
