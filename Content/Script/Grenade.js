@@ -11,8 +11,8 @@ var Grenade = function (player) {
     
     this.x = player.x;
     this.y = player.y;
-    this.vy = Math.sin(player.angle) * 15;
-    this.vx = Math.cos(player.angle) * 15;
+    this.vy = Math.sin(player.angle) * 10;
+    this.vx = Math.cos(player.angle) * 10;
     this.height = 10;
     this.width = 10;
     this.grenadeGrav = 0.3;
@@ -42,6 +42,7 @@ Grenade.prototype.draw = function (player) {
             that.clear();
             Game.projectile = null;
             Game.playerTurn = !Game.playerTurn;
+            Game.sound.miss();
         }, 1000);
     }
     this.ctx.fillRect(this.x -= this.vx, this.y -= this.vy -= this.grenadeGrav, this.width, this.height);

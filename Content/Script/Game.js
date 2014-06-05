@@ -36,9 +36,8 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
         width: canvas.width,
         height: canvas.height,
         gunModolus: 0,
-        difficult: 1
-
-
+        difficult: 1,
+        sound : true
     };
 
     /**
@@ -51,11 +50,12 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
     staticTexture.terrain();
     staticTexture.weapon(game.gunModolus);
     Game.map = staticTexture.getMap();
+    Game.sound = new Sound(game);
     Game.game = game;
-
     // Initializing player and Enemy, later this is done will be done for loading mutiple units.
     var enemy = new Enemy(canvas.width, canvas.height);
     var player = new Player(canvas.width, canvas.height);
+
 
     // difficult 2 = hard.
     if (difficult == 2) {
@@ -75,11 +75,15 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
     // Function to handle all keypress events.
     function playerAction() {
         player.move = false;
+
         if (Game.playerTurn == true && player.fired == false) {
             // CONTROLS FOR MOVEMENT
             if (38 in keyPressed) { // Player jumping on Up key
                 delete keyPressed[38];
                 if (!player.jumping) {
+                    if (game.sound == true) {
+                        Game.sound.jumped()
+                    }
                     player.jumping = true;
                     player.vy = +60;
                 }
@@ -154,7 +158,7 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
             if (17 in keyPressed) { // player swapping weapons on ctrl
                 delete keyPressed[17];
                 game.gunModolus += 1;
-                if (game.gunModolus % 2 == 1) {
+                if (game.gunModolus % 2 == 1) {       
                     player.firearm = 1;
                     staticTexture.weapon(player.firearm)
                 }
@@ -232,32 +236,27 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
         }
         if (Game.playerTurn == true && Game.projectile != null) {
             if (Game.checkCollision(Game.projectile, enemy)) {
-                enemy.health -= 1;
-                Game.projectile.clear();
-                Game.projectile = null;
+                Game.hit(enemy)
                 Game.playerTurn = false;
             }
         }
         if (Game.playerTurn == false) {
             enemy.enemyTurn(player);
             if (Game.checkCollision(Game.projectile, player)) {
-                player.health -= 1;
-                Game.projectile.clear();
-                Game.projectile = null;
+                Game.hit(player)
                 Game.playerTurn = true;
             }
         }
         if (Game.projectile != null && !Game.checkCollision(Game.projectile, game) && player.firearm == 0) {
-            Game.projectile = null;
-            Game.playerTurn = !Game.playerTurn;
+            Game.miss();
         }
         for (var i = 0; i < Game.map.length; i++) {
             if (Game.checkCollision(Game.projectile, Game.map[i])) {
-                    Game.projectile.clear();
-                    staticTexture.terrain(Game.map[i].x, Game.map[i].y);
-                    Game.map[i] = null;
-                    Game.projectile = null;
-                    Game.playerTurn = !Game.playerTurn;
+                Game.projectile.clear();
+                staticTexture.terrain(Game.map[i].x, Game.map[i].y);
+                Game.map[i] = null;
+                Game.miss();
+
             }
         }
         player.draw();
@@ -270,6 +269,24 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
 Game.projectile = null;
 Game.playerTurn = true;
 
+// If target hit.
+Game.hit = function (target) {
+    if (Game.game.sound == true) {
+        Game.sound.play();
+    }
+    target.health -= 1;
+    Game.projectile.clear();
+    Game.projectile = null;
+}
+// If target miss
+Game.miss = function () {
+    if (Game.game.sound == true) {
+        Game.sound.miss();
+    }
+    Game.projectile = null;
+    Game.playerTurn = !Game.playerTurn;
+}
+
 // Global function, handling all collisions in game, except 1 for grenade that i want dirrefent algoritm.
 Game.checkCollision = function (obj1, obj2) {
     if (obj1 == null || obj2 == null) {
@@ -280,5 +297,5 @@ Game.checkCollision = function (obj1, obj2) {
 };
 
 window.onload = function () {
-    Init();    
+    Init();
 };

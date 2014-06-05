@@ -5,11 +5,11 @@
  */
 var ClientHelp = function () {
     var that = this;
-
+     
     // Div for menu
     this.menuContent = document.getElementById("menuContent");
     this.menu = document.getElementById("menu");
-
+  
     // Divs for game view.
     this.mainDiv = document.getElementById("gameDiv");
     this.rulesDiv = document.getElementById("rulesDiv");
@@ -19,11 +19,11 @@ var ClientHelp = function () {
     document.getElementById("homeLink").onclick = function () {
         that.setMenu();
     };
-    var homeCount = 1;
+    
 
     // Event listener for toggling key map on and off.
+    var homeCount = 1;
     document.getElementById("controlLink").onclick = function () {
-        console.log(homeCount)
         homeCount += 1;
         if (homeCount % 2 == 0) {
             that.ctrlDiv.style.display = 'none';
@@ -32,6 +32,7 @@ var ClientHelp = function () {
             that.ctrlDiv.style.display = 'block';
         }
     };
+
 }
 // function to load adjust to Game CSS/Html structure.
 ClientHelp.prototype.setGame = function () {
