@@ -19,7 +19,7 @@ var Sound = function (game) {
         }
         else {
             game.sound = false;
-            soundImage.src = "Content/Image/soundOFF.png";
+            soundImage.src = "Content/Image/soundOff.png";
         }
     };
 }
