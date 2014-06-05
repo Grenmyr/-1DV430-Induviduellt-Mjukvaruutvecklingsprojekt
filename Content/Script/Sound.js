@@ -3,7 +3,8 @@
 var Sound = function (game) {
     var soundCount = 0;
     var game = game;
-
+    var soundImage = document.getElementById("soundImage")
+    
 
     this.fuck = new Audio("Content/sound/fuck.wav");
     this.jump = new Audio("Content/sound/jump.wav");
@@ -11,13 +12,14 @@ var Sound = function (game) {
 
     // Eventlistener to check if user want sound on or off.
     document.getElementById("soundLink").onclick = function () {
-        console.log("dsadsa")
         soundCount += 1;
         if (soundCount % 2 == 0) {
             game.sound = true;
+            soundImage.src = "Content/Image/soundOn.png";
         }
         else {
             game.sound = false;
+            soundImage.src = "Content/Image/soundOFF.png";
         }
     };
 }

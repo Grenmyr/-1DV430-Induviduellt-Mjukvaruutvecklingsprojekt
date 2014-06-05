@@ -85,7 +85,7 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
                         Game.sound.jumped()
                     }
                     player.jumping = true;
-                    player.vy = +60;
+                    player.vy = +40;
                 }
             }
             if (37 in keyPressed) { // Player holding left key.

@@ -38,7 +38,6 @@ var StaticTexture = function (width, height, selectedMap) {
     this.backgroundImage = new Image();
     var weaponImage = new Image();
     var terrain = new Image();
-   
 
     this.background = function () {
         this.backgroundImage.src = "Content/Image/background1.png";

@@ -20,8 +20,8 @@ var Enemy = function (width, height) {
     this.healthImage.src = "Content/Image/healthbar.png";
 
     this.health = 4;
-    this.x = Math.floor((Math.random() * 600) + 1);
-    this.y = 300;
+    this.x = 20;
+    this.y = 100;
     this.angle = 90;
     this.fire = false;
     this.vy = 0;
@@ -34,7 +34,7 @@ var Enemy = function (width, height) {
 Enemy.prototype = {
     width: 40,
     height: 40,
-    gravity: 10,
+    gravity: 5,
     aimSpeed: 0.05,
     speed: 5,
     dead: false
