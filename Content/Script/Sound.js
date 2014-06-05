@@ -11,7 +11,6 @@ var Sound = function (game) {
 
     // Eventlistener to check if user want sound on or off.
     document.getElementById("soundLink").onclick = function () {
-        console.log("dsadsa")
         soundCount += 1;
         if (soundCount % 2 == 0) {
             game.sound = true;
