@@ -5,9 +5,9 @@ var Sound = function (game) {
     var game = game;
 
 
-    this.fuck = new Audio("content/sound/fuck.wav");
-    this.jump = new Audio("content/sound/jump.wav");
-    this.sucker = new Audio("content/sound/sucker.wav");
+    this.fuck = new Audio("Content/sound/fuck.wav");
+    this.jump = new Audio("Content/sound/jump.wav");
+    this.sucker = new Audio("Content/sound/sucker.wav");
 
     // Eventlistener to check if user want sound on or off.
     document.getElementById("soundLink").onclick = function () {
