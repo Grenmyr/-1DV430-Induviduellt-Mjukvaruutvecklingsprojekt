@@ -38,7 +38,14 @@ var StaticTexture = function (width, height, selectedMap) {
     this.backgroundImage = new Image();
     var weaponImage = new Image();
     var terrain = new Image();
-   
+    terrain.src = "Content/Image/rabbit.png";
+    terrain.onload = function () {
+        for (var i = 0; i < map.length; i++) {
+            if (map[i] != null) {
+                ctxTerrain.drawImage(terrain, map[i].SpriteposX, map[i].SpritePosy, map[i].xLength, map[i].Yheight, map[i].x, map[i].y, 20, 20);
+            }
+        }
+    }
 
     this.background = function () {
         this.backgroundImage.src = "Content/Image/background1.png";
@@ -60,22 +67,10 @@ var StaticTexture = function (width, height, selectedMap) {
             ctxweapon.drawImage(weaponImage, 700, 0, 80, 80);
         };
     };
-    // Function to reload terrain with.
-    this.terrain = function () {
-        var that = this;
-        terrain.src = "Content/Image/rabbit.png";
-      
-        terrain.onload = function () {
-            that.clear()
-            for (var i = 0; i < map.length; i++) {
-                if (map[i] != null) {
-                    ctxTerrain.drawImage(terrain, map[i].SpriteposX, map[i].SpritePosy, map[i].xLength, map[i].Yheight, map[i].x, map[i].y, 20, 20);
-                }
-            }
-        }
-    };
-    this.clear = function (x,y) {
-        ctxTerrain.clearRect(0, 0, width, height);
+
+    // Function to clear terrain with.
+    this.clear = function (map) {
+        ctxTerrain.clearRect(map.x, map.y, map.width,map.height);
     }
     // Function to return my map.
     this.getMap = function () {
