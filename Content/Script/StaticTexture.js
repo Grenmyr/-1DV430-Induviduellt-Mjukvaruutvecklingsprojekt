@@ -60,11 +60,11 @@ var StaticTexture = function (width, height, selectedMap) {
         };
     };
     // Function to reload terrain with.
-    this.terrain = function (x, y) {
+    this.terrain = function () {
         terrain.src = "Content/Image/rabbit.png";
         
         terrain.onload = function () {
-            ctxTerrain.clearRect(x - 22, y - 22, width, height);
+            ctxTerrain.clearRect(0,0, width, height);
             for (var i = 0; i < map.length; i++) {
                 if (map[i] != null) {
                     ctxTerrain.drawImage(terrain, map[i].SpriteposX, map[i].SpritePosy, map[i].xLength, map[i].Yheight, map[i].x, map[i].y, 20, 20);
