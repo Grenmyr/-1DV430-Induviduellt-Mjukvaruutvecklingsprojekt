@@ -26,7 +26,7 @@ var Enemy = function (width, height) {
     this.fire = false;
     this.vy = 0;
     this.faceLeft = false;
-    this.moveRange = 100;
+    this.moveRange = 50;
     this.target = false;
 
 
@@ -36,7 +36,7 @@ Enemy.prototype = {
     height: 40,
     gravity: 5,
     aimSpeed: 0.05,
-    speed: 5,
+    speed: 3,
     dead: false
 };
 /**
@@ -126,9 +126,8 @@ Enemy.prototype.enemyTurn = function (player) {
         else {
             this.faceLeft = false;
         }
-
         if (this.moveRange >= 0 ) {
-            if (this.x > 0 || this.x < Game.game.width){
+            if (this.x > 0 && this.x < Game.game.width){
                 this.x += this.speed;
             }
             this.moveRange -= 10;
