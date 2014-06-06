@@ -26,7 +26,7 @@ var ClientHelp = function () {
     var homeCount = 1;
     document.getElementById("controlLink").onclick = function () {
         homeCount += 1;
-        if (homeCount % 2 == 0) {
+        if (homeCount % 2 == 1) {
             that.ctrlDiv.style.display = 'none';
         }
         else {
@@ -40,7 +40,7 @@ ClientHelp.prototype.setGame = function () {
     this.menuContent.style.display = "none";
     this.mainDiv.style.display = 'block';
     this.rulesDiv.style.display = 'block';
-    this.ctrlDiv.style.display = 'block';
+    //this.ctrlDiv.style.display = 'block';
 }
 // function to load canvas
 ClientHelp.prototype.setCanvas = function () {
