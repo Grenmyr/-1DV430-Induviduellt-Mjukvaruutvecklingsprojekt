@@ -47,7 +47,6 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
      */
     var staticTexture = new StaticTexture(canvas.width, canvas.height, selectedMap);
     staticTexture.background();
-    staticTexture.terrain();
     staticTexture.weapon(game.gunModolus);
     Game.map = staticTexture.getMap();
     Game.sound = new Sound(game);
@@ -252,10 +251,12 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
         }
         for (var i = 0; i < Game.map.length; i++) {
             if (Game.checkCollision(Game.projectile, Game.map[i])) {
-                Game.projectile.clear();    
+                Game.projectile.clear();
+               
+                staticTexture.clear(Game.map[i])
                 Game.map[i] = null;
-                staticTexture.terrain();               
                 Game.miss();
+
             }
         }
         player.draw();
