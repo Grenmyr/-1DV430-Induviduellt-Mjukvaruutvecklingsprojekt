@@ -72,6 +72,23 @@ var StaticTexture = function (width, height, selectedMap) {
     this.clear = function (map) {
         ctxTerrain.clearRect(map.x, map.y, map.width,map.height);
     }
+    // Function to handle Game over events, it looks like shit but deadline is soon, its better then the alerts i had earlier.
+    this.gameOver = function (winner) {
+        ctxTerrain.font = "60px Impact";
+        if (winner == true) {
+   
+            ctxTerrain.fillText("You Lost, Computer WON!", 50, 255);
+            ctxTerrain.font = "30px Impact";
+            ctxTerrain.fillText("Press Home in top left menu to start a new Game", 50, 300);
+        }
+        else  {
+            ctxTerrain.fillText("YOU WON!! Good work!", 50, 255);
+            ctxTerrain.font = "30px Impact";
+            ctxTerrain.fillText("Press Home in top left menu to start a new Game", 50, 300);
+        }
+        ctxTerrain.font = "90px Impact";
+    }
+
     // Function to return my map.
     this.getMap = function () {
 

@@ -38,6 +38,7 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
         gunModolus: 0,
         difficult: 1,
         sound : true
+
     };
 
     /**
@@ -217,15 +218,17 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
      * If projectile if fired and if it is Ai (Enemy) or players turn.
      */
     function draw() {
-        // Load menu after player or AI wins.
+
+        // Cases to handle Game over.
         if (player.dead) {
-            alert("Datorn vann, du suger!")
-            clientHelp.setMenu();
+            Game.over = true;
+            staticTexture.gameOver(player.dead);
         }
         else if (enemy.dead) {
-            alert("Du vann, Grattis!!")
-            clientHelp.setMenu();
+            Game.over = true;
+            staticTexture.gameOver(player.dead);
         }
+        
         // check for player commands
         playerAction();
 
@@ -261,13 +264,17 @@ var Game = function (selectedMap, units, difficult, clientHelp) {
         }
         player.draw();
         enemy.draw();
-        window.requestAnimationFrame(draw);
+        // If game over, stop callback.
+        if (Game.over == false) {
+            window.requestAnimationFrame(draw);
+        }
     }
-    draw();
+        draw();
 };
 // Global variables
 Game.projectile = null;
 Game.playerTurn = true;
+Game.over = false;
 
 // If target hit.
 Game.hit = function (target) {
